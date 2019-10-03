@@ -11,7 +11,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <Home data="HOME"></Home>
-
+        {console.log('222')}
         <Home data="test"></Home>
       </header>
     </div>
