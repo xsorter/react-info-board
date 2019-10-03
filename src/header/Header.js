@@ -1,5 +1,5 @@
 import React from 'react';
-import headerLogo from './header-logo.jpg';
+import headerLogoSvg from './logo.svg';
 import './Header.sass';
 
 export default class Header extends React.Component {
@@ -7,7 +7,7 @@ export default class Header extends React.Component {
     return(
       <div className="header">
         <div className="c-box">
-          <img src={headerLogo} className="header__logo" alt="Header-logo" />
+          <img src={headerLogoSvg} className="header__logo" alt="Header-logo" />
           <div className="header__logo-label">React Info Board</div>
         </div>
       </div>
