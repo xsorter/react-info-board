@@ -1,3 +1,6 @@
+[![react](https://img.shields.io/badge/react-16.10-blue.svg)](https://reactjs.org)
+[![firebase](https://img.shields.io/badge/-firebase-yellow.svg)](https://firebase.google.com/)
+
 # Informational dashboard
 
 ## Code style setup
