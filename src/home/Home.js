@@ -1,18 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import logo from '../logo.svg';
 
 export default class Home extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state = { data: '' }
+    this.state = { data: '' };
     console.log(props);
   }
 
   render() {
-    return(
+    return (
       <div>
-        Super useful warnings database ({this.props.data})
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          Super useful warnings database ({this.props.data})
+        </header>
       </div>
-    )
+    );
   }
 }
