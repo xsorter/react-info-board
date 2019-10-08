@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import './MainMenu.sass';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import WarningIcon from '@material-ui/icons/Warning';
-import DnsIcon from '@material-ui/icons/Dns';
+import { Warning, Dns, Code } from '@material-ui/icons';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 export default function MainMenu() {
   const [value, setValue] = useState(1);
@@ -16,8 +16,9 @@ export default function MainMenu() {
     <div className="MainMenu">
       <div className="cBox">
         <Tabs value={value} indicatorColor="primary" textColor="primary" onChange={handleChange}>
-          <Tab icon={<WarningIcon />} label="Warnings" />
-          <Tab icon={<DnsIcon />} label="General Info" />
+          <Tab to="/warnings" icon={<Warning />} label="Warnings" component={Link} />
+          <Tab to="/general-info" icon={<Dns />} label="General Info" component={Link} />
+          <Tab to="/code-snippets" icon={<Code />} label="Code Snippets" component={Link} />
         </Tabs>
       </div>
     </div>
