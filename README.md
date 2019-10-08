@@ -13,9 +13,11 @@ For correct functionality you should do next steps (assume you are use VS Code):
 3. Install [prettier VS Code extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 4. (optional) In your local setting.json file (for Windows - "..\AppData\Roaming\Code\User\settings.json") add following lines:
 
-```
+ when staging files.```
 "editor.formatOnSave": true,
 "eslint.autoFixOnSave": true
 ```
 
 This step is needed for automatic formatting your code on ctrl+s
+
+If you'll need to add something without pre-commit hook, use `--no-verify` when staging files.
