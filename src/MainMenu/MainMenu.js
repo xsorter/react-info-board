@@ -3,7 +3,7 @@ import './MainMenu.sass';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { Warning, Dns, Code } from '@material-ui/icons';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function MainMenu() {
   const [value, setValue] = useState(1);
