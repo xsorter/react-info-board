@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(0.5),
   },
 }));
-const HomePageListItem = props => {
+const InfoListItem = props => {
   const classes = useStyles();
   const removeIcon = props.removable ? (
     <CloseIcon onClick={props.click} className={classes.close} />
@@ -59,4 +59,4 @@ const HomePageListItem = props => {
   );
 };
 
-export default HomePageListItem;
+export default InfoListItem;

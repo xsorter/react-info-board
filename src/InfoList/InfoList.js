@@ -1,26 +1,10 @@
 import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
-import HomePageListItem from './HomePageListItem/HomePageListItem';
+import InfoListItem from './InfoListItem/InfoListItem';
 import Typography from '@material-ui/core/Typography';
-class HomePageList extends Component {
+class InfoList extends Component {
   state = {
-    itemList: [
-      {
-        id: 'unid-0',
-        title: 'Title-0',
-        content: 'Content-0 Content-0 Content-0 Content-0',
-      },
-      {
-        id: 'unid-1',
-        title: 'Title-1',
-        content: 'Content-1 Content-1 Content-1 Content-1',
-      },
-      {
-        id: 'unid-2',
-        title: 'Title-2',
-        content: 'Content-2 Content-2 Content-2 Content-2',
-      },
-    ],
+    itemList: this.props.dataArr,
   };
   removeItemHandler = itemIndex => {
     const newItemList = [...this.state.itemList];
@@ -35,16 +19,16 @@ class HomePageList extends Component {
   render() {
     const showRemoveIcon = this.state.itemList.length > 1 ? true : false;
     return (
-      <div className="HomePageList">
+      <div className="InfoList">
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <Typography color="primary" className="HomePageList__title" variant="h5" component="h5">
+            <Typography color="primary" variant="h5" component="h5">
               Latest updates
             </Typography>
           </Grid>
           {this.state.itemList.map((listItem, index) => {
             return (
-              <HomePageListItem
+              <InfoListItem
                 click={this.removeItemHandler.bind(this, index)}
                 titleChange={this.itemTitleChangeHandler.bind(this, index)}
                 title={listItem.title}
@@ -60,4 +44,4 @@ class HomePageList extends Component {
   }
 }
 
-export default HomePageList;
+export default InfoList;
