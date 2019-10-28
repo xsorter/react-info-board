@@ -4,7 +4,12 @@ import HomePageListItem from './HomePageListItem/HomePageListItem';
 import Typography from '@material-ui/core/Typography';
 class HomePageList extends Component {
   state = {
-    warningList: [
+    itemList: [
+      {
+        id: 'unid-0',
+        title: 'Title-0',
+        content: 'Content-0 Content-0 Content-0 Content-0',
+      },
       {
         id: 'unid-1',
         title: 'Title-1',
@@ -15,30 +20,36 @@ class HomePageList extends Component {
         title: 'Title-2',
         content: 'Content-2 Content-2 Content-2 Content-2',
       },
-      {
-        id: 'unid-3',
-        title: 'Title-3',
-        content: 'Content-3 Content-3 Content-3 Content-3',
-      },
     ],
   };
-  deleteWarning = warningIndex => {
-    const newWarnings = [...this.state.warningList];
-    newWarnings.splice(warningIndex, 1);
-    this.setState({ warningList: newWarnings });
+  removeItemHandler = itemIndex => {
+    const newItemList = [...this.state.itemList];
+    newItemList.splice(itemIndex, 1);
+    this.setState({ itemList: newItemList });
+  };
+  itemTitleChangeHandler = (index, event) => {
+    const newItemList = [...this.state.itemList];
+    newItemList[index].title = event.target.value;
+    this.setState({ itemList: newItemList });
   };
   render() {
     return (
       <div className="HomePageList">
         <Grid container spacing={3}>
-          <Grid item xs={12} /*onClick={() => this.deleteWarning(index)} key={warning.id}*/>
+          <Grid item xs={12}>
             <Typography color="primary" className="HomePageList__title" variant="h5" component="h5">
               Latest updates
             </Typography>
           </Grid>
-          {this.state.warningList.map((warning, index) => {
+          {this.state.itemList.map((warning, index) => {
             return (
-              <HomePageListItem key={warning.id} title={warning.title} content={warning.content} />
+              <HomePageListItem
+                click={this.removeItemHandler.bind(this, index)}
+                titleChange={this.itemTitleChangeHandler.bind(this, index)}
+                title={warning.title}
+                content={warning.content}
+                key={warning.id}
+              />
             );
           })}
         </Grid>
