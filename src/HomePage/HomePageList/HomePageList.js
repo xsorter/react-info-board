@@ -33,6 +33,7 @@ class HomePageList extends Component {
     this.setState({ itemList: newItemList });
   };
   render() {
+    const showRemoveIcon = this.state.itemList.length > 1 ? true : false;
     return (
       <div className="HomePageList">
         <Grid container spacing={3}>
@@ -41,14 +42,15 @@ class HomePageList extends Component {
               Latest updates
             </Typography>
           </Grid>
-          {this.state.itemList.map((warning, index) => {
+          {this.state.itemList.map((listItem, index) => {
             return (
               <HomePageListItem
                 click={this.removeItemHandler.bind(this, index)}
                 titleChange={this.itemTitleChangeHandler.bind(this, index)}
-                title={warning.title}
-                content={warning.content}
-                key={warning.id}
+                title={listItem.title}
+                content={listItem.content}
+                key={listItem.id}
+                removable={showRemoveIcon}
               />
             );
           })}

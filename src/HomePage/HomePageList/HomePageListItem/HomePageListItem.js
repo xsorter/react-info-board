@@ -35,10 +35,13 @@ const useStyles = makeStyles(theme => ({
 }));
 const HomePageListItem = props => {
   const classes = useStyles();
+  const removeIcon = props.removable ? (
+    <CloseIcon onClick={props.click} className={classes.close} />
+  ) : null;
   return (
     <Grid item xs={12}>
       <Paper className={classes.root}>
-        <CloseIcon onClick={props.click} className={classes.close} />
+        {removeIcon}
         <Typography className={classes.title} variant="h6" component="h6">
           {props.title}
         </Typography>
