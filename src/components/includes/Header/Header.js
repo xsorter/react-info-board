@@ -1,5 +1,5 @@
 import React from 'react';
-import headerLogoSvg from './logo.svg';
+import headerLogoSvg from '../../../logo.svg';
 import './Header.sass';
 import Button from '@material-ui/core/Button';
 import DynamicFeedIcon from '@material-ui/icons/DynamicFeed';
