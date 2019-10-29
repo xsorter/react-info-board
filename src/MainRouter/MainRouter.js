@@ -1,15 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import RouterTest from '../RouterTest/RouterTest';
-import Header from '../Header/Header';
-import MainMenu from '../MainMenu/MainMenu';
-import HomePage from '../HomePage/HomePage';
+import Header from '../components/includes/Header/Header';
+import MainMenu from '../components/includes/MainMenu/MainMenu';
+import HomePage from '../components/wrappers/HomePage/HomePage';
+import RouterTest from '../components/wrappers/RouterTest/RouterTest';
 
 export default class MainRouter extends React.Component {
-  constructor(props) {
-    super(props);
-    console.log(props);
-  }
 
   render() {
     return (

@@ -1,11 +1,10 @@
 import React from 'react';
-import logo from '../logo.svg';
+import logo from '../../../logo.svg';
 
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = { data: '' };
-    console.log(props);
   }
 
   render() {
