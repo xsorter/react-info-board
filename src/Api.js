@@ -1,0 +1,3 @@
+const setData = () => {};
+
+const getData = () => {};
