@@ -33,6 +33,10 @@ const setData = async () => {
   return result;
 };
 
+const updatedata = async () => {
+  /*TODO refactor set method for update*/
+};
+
 const getData = async () => {
   const response = await fetch(
     `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/${COLLECTION}/${DOCUMENT_ID}`,
@@ -41,4 +45,4 @@ const getData = async () => {
   return result;
 };
 
-export default { getData, setData };
+export default { getData, setData, updatedata };
