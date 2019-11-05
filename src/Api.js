@@ -33,7 +33,7 @@ const setData = async () => {
   return result;
 };
 
-const updatedata = async () => {
+const updateData = async () => {
   /*TODO refactor set method for update*/
 };
 
@@ -45,4 +45,4 @@ const getData = async () => {
   return result;
 };
 
-export default { getData, setData, updatedata };
+export default { getData, setData, updateData };
