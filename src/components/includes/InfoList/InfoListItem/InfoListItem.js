@@ -45,12 +45,6 @@ const InfoListItem = props => {
         <Typography className={classes.content} component="p">
           {props.content}
         </Typography>
-        <input
-          value={props.title}
-          onChange={props.titleChange}
-          className={classes.textInput}
-          type="text"
-        />
       </Paper>
     </Grid>
   );

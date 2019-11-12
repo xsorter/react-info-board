@@ -11,11 +11,6 @@ class InfoList extends Component {
     newItemList.splice(itemIndex, 1);
     this.setState({ itemList: newItemList });
   };
-  itemTitleChangeHandler = (index, event) => {
-    const newItemList = [...this.state.itemList];
-    newItemList[index].title = event.target.value;
-    this.setState({ itemList: newItemList });
-  };
   render() {
     return (
       <div className="InfoList">
@@ -29,7 +24,6 @@ class InfoList extends Component {
             return (
               <InfoListItem
                 click={this.removeItemHandler.bind(this, index)}
-                titleChange={this.itemTitleChangeHandler.bind(this, index)}
                 title={listItem.title}
                 content={listItem.content}
                 key={listItem.id}
