@@ -16,16 +16,19 @@ const HomePage = () => {
       id: 'unid-0',
       title: 'Title-0',
       content: 'Content-0 Content-0 Content-0 Content-0',
+      deletionSubmit: false,
     },
     {
       id: 'unid-1',
       title: 'Title-1',
       content: 'Content-1 Content-1 Content-1 Content-1',
+      deletionSubmit: false,
     },
     {
       id: 'unid-2',
       title: 'Title-2',
       content: 'Content-2 Content-2 Content-2 Content-2',
+      deletionSubmit: false,
     },
   ];
   return (
