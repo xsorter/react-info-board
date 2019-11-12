@@ -17,7 +17,6 @@ class InfoList extends Component {
     this.setState({ itemList: newItemList });
   };
   render() {
-    const showRemoveIcon = this.state.itemList.length > 1 ? true : false;
     return (
       <div className="InfoList">
         <Grid container spacing={3}>
@@ -34,7 +33,6 @@ class InfoList extends Component {
                 title={listItem.title}
                 content={listItem.content}
                 key={listItem.id}
-                removable={showRemoveIcon}
               />
             );
           })}
