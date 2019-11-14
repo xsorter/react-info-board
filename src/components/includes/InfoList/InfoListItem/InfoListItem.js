@@ -37,11 +37,15 @@ const useStyles = makeStyles(theme => ({
 }));
 const InfoListItem = props => {
   const classes = useStyles();
+  console.log('LISTITEM', props);
   return (
     <Grid item xs={12}>
       <Paper className={classes.root}>
-        <CloseIcon onClick={props.click} className={classes.close} />
-        <SubmitPopup message="Are you really want to delete this item?" />
+        <CloseIcon className={classes.close} />
+        <SubmitPopup
+          click={props.click.bind(this)}
+          message="Are you really want to delete this item?"
+        />
         <Typography className={classes.title} variant="h6" component="h6">
           {props.title}
         </Typography>
