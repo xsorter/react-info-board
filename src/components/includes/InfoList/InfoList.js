@@ -6,10 +6,17 @@ class InfoList extends Component {
   state = {
     itemList: this.props.dataArr,
   };
+  submitHandler = itemIndex => {
+    const newItemList = [...this.state.itemList];
+    newItemList[itemIndex].deletionSubmit = true;
+    this.setState({ itemList: newItemList });
+  };
   removeItemHandler = (itemIndex, action) => {
     const newItemList = [...this.state.itemList];
     if (action === 'Delete') {
       newItemList.splice(itemIndex, 1);
+    } else {
+      newItemList[itemIndex].deletionSubmit = false;
     }
     this.setState({ itemList: newItemList });
   };
@@ -26,6 +33,8 @@ class InfoList extends Component {
             return (
               <InfoListItem
                 click={action => this.removeItemHandler(index, action)}
+                submit={() => this.submitHandler(index)}
+                showPopup={this.state.itemList[index].deletionSubmit}
                 title={listItem.title}
                 content={listItem.content}
                 key={listItem.id}
