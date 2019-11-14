@@ -43,7 +43,7 @@ const InfoListItem = props => {
       <Paper className={classes.root}>
         <CloseIcon className={classes.close} />
         <SubmitPopup
-          click={props.click.bind(this)}
+          click={action => props.click(action)}
           message="Are you really want to delete this item?"
         />
         <Typography className={classes.title} variant="h6" component="h6">

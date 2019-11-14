@@ -8,10 +8,20 @@ const SubmitPopup = props => {
     <div className="submit-popup">
       <p>{props.message}</p>
       <div className="submit-popup__buttons">
-        <Button onClick={props.click} variant="outlined" size="small" color="primary">
+        <Button
+          onClick={() => props.click('Delete')}
+          variant="outlined"
+          size="small"
+          color="primary"
+        >
           Yes
         </Button>
-        <Button variant="outlined" size="small" color="secondary">
+        <Button
+          onClick={() => props.click('Reject')}
+          variant="outlined"
+          size="small"
+          color="secondary"
+        >
           No
         </Button>
       </div>

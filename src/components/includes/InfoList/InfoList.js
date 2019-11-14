@@ -6,9 +6,11 @@ class InfoList extends Component {
   state = {
     itemList: this.props.dataArr,
   };
-  removeItemHandler = itemIndex => {
+  removeItemHandler = (itemIndex, action) => {
     const newItemList = [...this.state.itemList];
-    newItemList.splice(itemIndex, 1);
+    if (action === 'Delete') {
+      newItemList.splice(itemIndex, 1);
+    }
     this.setState({ itemList: newItemList });
   };
   render() {
@@ -23,7 +25,7 @@ class InfoList extends Component {
           {this.state.itemList.map((listItem, index) => {
             return (
               <InfoListItem
-                click={this.removeItemHandler.bind(this, index)}
+                click={action => this.removeItemHandler(index, action)}
                 title={listItem.title}
                 content={listItem.content}
                 key={listItem.id}
