@@ -11,7 +11,7 @@ const SubmitPopup = props => {
         <Button
           onClick={() => props.click('Delete')}
           variant="outlined"
-          size="small"
+          size="medium"
           color="primary"
         >
           Yes
@@ -19,7 +19,7 @@ const SubmitPopup = props => {
         <Button
           onClick={() => props.click('Reject')}
           variant="outlined"
-          size="small"
+          size="medium"
           color="secondary"
         >
           No
