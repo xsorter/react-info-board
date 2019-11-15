@@ -40,8 +40,15 @@ const setData = async () => {
 
 const getData = async () => {
   const response = await fetch(
-    `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/
-    (default)/documents/${COLLECTION}/${DOCUMENT_ID}`,
+    `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/${COLLECTION}/`,
+  );
+  const result = await response.json();
+  return result;
+};
+
+const getSingleItem = async () => {
+  const response = await fetch(
+    `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/${COLLECTION}/${DOCUMENT_ID}`,
   );
   const result = await response.json();
   return result;
@@ -62,4 +69,4 @@ const deleteData = async () => {
   return result;
 };
 
-export default { getData, setData, deleteData };
+export default { getData, setData, deleteData, getSingleItem };

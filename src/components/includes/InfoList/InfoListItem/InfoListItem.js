@@ -37,7 +37,6 @@ const useStyles = makeStyles(theme => ({
 }));
 const InfoListItem = props => {
   const classes = useStyles();
-  console.log('LISTITEM', props.showPopup);
   return (
     <Grid item xs={12}>
       <Paper className={classes.root}>

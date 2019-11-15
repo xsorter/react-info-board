@@ -2,13 +2,39 @@ import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
 import InfoListItem from './InfoListItem/InfoListItem';
 import Typography from '@material-ui/core/Typography';
+
 class InfoList extends Component {
   state = {
-    itemList: this.props.dataArr,
+    itemList: [],
   };
+
+  componentDidMount() {
+    this.setState({ itemList: this.props.dataArr });
+  }
+
+  shouldComponentUpdate(nextProps) {
+    if (this.props.dataArr !== nextProps.dataArr) {
+      this.setState({
+        itemList: nextProps.dataArr,
+      });
+    }
+    return true;
+  }
+
+  /*componentDidMount() {
+    Api.getData().then(data => {
+      const items = [];
+      data.documents.map(e => {
+        items.push(e.fields);
+      });
+      const newItemList = [...items];
+      this.setState({ itemList: newItemList });
+    });
+  }*/
+
   submitHandler = itemIndex => {
     const newItemList = [...this.state.itemList];
-    newItemList[itemIndex].deletionSubmit = true;
+    newItemList[itemIndex].deletionSubmit.booleanValue = true;
     this.setState({ itemList: newItemList });
   };
   removeItemHandler = (itemIndex, action) => {
@@ -16,7 +42,7 @@ class InfoList extends Component {
     if (action === 'Delete') {
       newItemList.splice(itemIndex, 1);
     } else {
-      newItemList[itemIndex].deletionSubmit = false;
+      newItemList[itemIndex].deletionSubmit.booleanValue = false;
     }
     this.setState({ itemList: newItemList });
   };
@@ -34,10 +60,10 @@ class InfoList extends Component {
               <InfoListItem
                 click={action => this.removeItemHandler(index, action)}
                 submit={() => this.submitHandler(index)}
-                showPopup={this.state.itemList[index].deletionSubmit}
-                title={listItem.title}
-                content={listItem.content}
-                key={listItem.id}
+                showPopup={this.state.itemList[index].deletionSubmit.booleanValue}
+                title={listItem.title.stringValue}
+                content={listItem.content.stringValue}
+                key={listItem.id.stringValue}
               />
             );
           })}
