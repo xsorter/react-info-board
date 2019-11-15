@@ -2,22 +2,51 @@ import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
 import InfoListItem from './InfoListItem/InfoListItem';
 import Typography from '@material-ui/core/Typography';
+
 class InfoList extends Component {
   state = {
-    itemList: this.props.dataArr,
+    itemList: [],
   };
-  removeItemHandler = itemIndex => {
+
+  componentDidMount() {
+    this.setState({ itemList: this.props.dataArr });
+  }
+
+  shouldComponentUpdate(nextProps) {
+    if (this.props.dataArr !== nextProps.dataArr) {
+      this.setState({
+        itemList: nextProps.dataArr,
+      });
+    }
+    return true;
+  }
+
+  /*componentDidMount() {
+    Api.getData().then(data => {
+      const items = [];
+      data.documents.map(e => {
+        items.push(e.fields);
+      });
+      const newItemList = [...items];
+      this.setState({ itemList: newItemList });
+    });
+  }*/
+
+  submitHandler = itemIndex => {
     const newItemList = [...this.state.itemList];
-    newItemList.splice(itemIndex, 1);
+    newItemList[itemIndex].deletionSubmit.booleanValue = true;
     this.setState({ itemList: newItemList });
   };
-  itemTitleChangeHandler = (index, event) => {
+  removeItemHandler = (itemIndex, action) => {
     const newItemList = [...this.state.itemList];
-    newItemList[index].title = event.target.value;
+    if (action === 'Delete') {
+      newItemList.splice(itemIndex, 1);
+    } else {
+      newItemList[itemIndex].deletionSubmit.booleanValue = false;
+    }
     this.setState({ itemList: newItemList });
   };
   render() {
-    const showRemoveIcon = this.state.itemList.length > 1 ? true : false;
     return (
       <div className="InfoList">
         <Grid container spacing={3}>
@@ -29,12 +58,12 @@ class InfoList extends Component {
           {this.state.itemList.map((listItem, index) => {
             return (
               <InfoListItem
-                click={this.removeItemHandler.bind(this, index)}
-                titleChange={this.itemTitleChangeHandler.bind(this, index)}
-                title={listItem.title}
-                content={listItem.content}
-                key={listItem.id}
-                removable={showRemoveIcon}
+                click={action => this.removeItemHandler(index, action)}
+                submit={() => this.submitHandler(index)}
+                showPopup={this.state.itemList[index].deletionSubmit.booleanValue}
+                title={listItem.title.stringValue}
+                content={listItem.content.stringValue}
+                key={listItem.id.stringValue}
               />
             );
           })}

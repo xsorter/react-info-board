@@ -1,33 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import InfoList from '../../includes/InfoList/InfoList';
+import Api from '../../../Api';
 const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(3, 0),
   },
 }));
 
-const HomePage = () => {
+const HomePage = props => {
   const classes = useStyles();
-  const homePageInfoList = [
-    {
-      id: 'unid-0',
-      title: 'Title-0',
-      content: 'Content-0 Content-0 Content-0 Content-0',
-    },
-    {
-      id: 'unid-1',
-      title: 'Title-1',
-      content: 'Content-1 Content-1 Content-1 Content-1',
-    },
-    {
-      id: 'unid-2',
-      title: 'Title-2',
-      content: 'Content-2 Content-2 Content-2 Content-2',
-    },
-  ];
+  const [homePageInfoList, updateList] = useState([]);
+
+  useEffect(() => {
+    Api.getData().then(data => {
+      const items = [];
+      data.documents.map(e => {
+        items.push(e.fields);
+        return null;
+      });
+      updateList(items);
+    });
+  }, []);
+
   return (
     <div className="HomePage">
       <div className="cBox">

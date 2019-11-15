@@ -4,6 +4,8 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import CloseIcon from '@material-ui/icons/Close';
+import SubmitPopup from '../SubmitPopup/SubmitPopup';
+
 const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(1, 2),
@@ -35,25 +37,24 @@ const useStyles = makeStyles(theme => ({
 }));
 const InfoListItem = props => {
   const classes = useStyles();
-  const removeIcon = props.removable ? (
-    <CloseIcon onClick={props.click} className={classes.close} />
-  ) : null;
   return (
     <Grid item xs={12}>
       <Paper className={classes.root}>
-        {removeIcon}
+        <CloseIcon onClick={props.submit} className={classes.close} />
+        {props.showPopup ? (
+          <SubmitPopup
+            click={action => props.click(action)}
+            message="Are you really want to delete this item?"
+          />
+        ) : (
+          ''
+        )}
         <Typography className={classes.title} variant="h6" component="h6">
           {props.title}
         </Typography>
         <Typography className={classes.content} component="p">
           {props.content}
         </Typography>
-        <input
-          value={props.title}
-          onChange={props.titleChange}
-          className={classes.textInput}
-          type="text"
-        />
       </Paper>
     </Grid>
   );
