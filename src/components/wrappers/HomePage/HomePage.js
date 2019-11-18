@@ -21,6 +21,7 @@ const HomePage = props => {
         items.push(e.fields);
         return null;
       });
+      items.splice(4);
       updateList(items);
     });
   }, []);
