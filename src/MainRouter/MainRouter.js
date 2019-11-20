@@ -1,12 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Header from '../components/includes/Header/Header';
+import Notepad from '../components/includes/Notepad/Notepad';
 import MainMenu from '../components/includes/MainMenu/MainMenu';
 import HomePage from '../components/wrappers/HomePage/HomePage';
 import RouterTest from '../components/wrappers/RouterTest/RouterTest';
 
 export default class MainRouter extends React.Component {
-
   render() {
     return (
       <Router>
@@ -22,6 +22,9 @@ export default class MainRouter extends React.Component {
             </Route>
             <Route path="/warnings">
               <RouterTest data="to warnings" />
+            </Route>
+            <Route path="/notepad">
+              <Notepad />
             </Route>
             <Route path="/">
               <HomePage />

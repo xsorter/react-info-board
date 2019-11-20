@@ -21,17 +21,6 @@ class InfoList extends Component {
     return true;
   }
 
-  /*componentDidMount() {
-    Api.getData().then(data => {
-      const items = [];
-      data.documents.map(e => {
-        items.push(e.fields);
-      });
-      const newItemList = [...items];
-      this.setState({ itemList: newItemList });
-    });
-  }*/
-
   submitHandler = itemIndex => {
     const newItemList = [...this.state.itemList];
     newItemList[itemIndex].deletionSubmit.booleanValue = true;
