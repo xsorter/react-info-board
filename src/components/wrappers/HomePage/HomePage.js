@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import InfoList from '../../includes/InfoList/InfoList';
+import { EventNote } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import Api from '../../../Api';
 const useStyles = makeStyles(theme => ({
@@ -43,7 +44,9 @@ const HomePage = props => {
           </Grid>
         </div>
       </div>
-      <Link class="button__notepad" to="/notepad">Notepad</Link>
+      <Link title="Notepad" className="button__notepad" to="/notepad">
+        <EventNote>Notepad</EventNote>
+      </Link>
     </div>
   );
 };
