@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './Notepad.sass';
 import Button from '@material-ui/core/Button';
 import { Editor } from 'react-draft-wysiwyg';
-import { EditorState } from 'draft-js';
+import { EditorState, convertToRaw } from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 class Notepad extends Component {
@@ -19,6 +19,7 @@ class Notepad extends Component {
     });
   };
   saveHandler = () => {
+    console.log('CURRENT CONTENT', convertToRaw(this.state.editorState.getCurrentContent()))
     console.log('SAVED');
   };
   clearHandler = () => {
