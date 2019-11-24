@@ -2,14 +2,34 @@ import React, { Component } from 'react';
 import './Notepad.sass';
 import Button from '@material-ui/core/Button';
 import { Editor } from 'react-draft-wysiwyg';
-import { EditorState, convertToRaw } from 'draft-js';
+import { convertToRaw, convertFromRaw } from 'draft-js';
+import { EditorState, SelectionState, Modifier, ContentState } from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
+const nullContent = {
+  entityMap: {},
+  blocks: [
+    {
+      key: '637gr',
+      text: '',
+      type: 'unstyled',
+      depth: 0,
+      inlineStyleRanges: [],
+      entityRanges: [],
+      data: {},
+    },
+  ],
+};
+
 class Notepad extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    const currentContent = localStorage.getItem('notepadContent')
+      ? JSON.parse(localStorage.getItem('notepadContent'))
+      : nullContent;
     this.state = {
-      editorState: EditorState.createEmpty(),
+      contentState: currentContent,
+      editorState: EditorState.createWithContent(convertFromRaw(currentContent)),
     };
   }
 
@@ -18,13 +38,19 @@ class Notepad extends Component {
       editorState,
     });
   };
+
   saveHandler = () => {
-    console.log('CURRENT CONTENT', convertToRaw(this.state.editorState.getCurrentContent()))
-    console.log('SAVED');
+    localStorage.setItem(
+      'notepadContent',
+      JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent())),
+    );
   };
+
   clearHandler = () => {
-    console.log('CLEAR');
+    const editorState = EditorState.push(this.state.editorState, ContentState.createFromText(''));
+    this.setState({ editorState });
   };
+
   render() {
     const { editorState } = this.state;
     return (
@@ -32,6 +58,7 @@ class Notepad extends Component {
         <div className="cBox">
           <h2 className="notepad__title">Notepad</h2>
           <Editor
+            initialContentState={editorState.contentState}
             editorState={editorState}
             toolbarClassName="notepad__toolbar"
             wrapperClassName="notepad__wrapper"
