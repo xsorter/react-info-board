@@ -17,6 +17,8 @@ const HomePage = props => {
   const [homePageInfoList, updateList] = useState([]);
 
   useEffect(() => {
+    const abortController = new AbortController();
+
     Api.getData().then(data => {
       const items = [];
       data.documents.map(e => {
@@ -26,6 +28,11 @@ const HomePage = props => {
       items.splice(4);
       updateList(items);
     });
+
+    //for promise unsubscribe before unmount component
+    return function cleanup() {
+      abortController.abort();
+    };
   }, []);
 
   return (
