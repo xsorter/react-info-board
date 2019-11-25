@@ -1,22 +1,15 @@
 import React from 'react';
+import './InfoListItem.sass';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import CloseIcon from '@material-ui/icons/Close';
 import SubmitPopup from '../SubmitPopup/SubmitPopup';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    padding: theme.spacing(1, 2),
+    padding: theme.spacing(2),
     position: 'relative',
-  },
-  title: {
-    fontSize: '1.2rem',
-    marginBottom: '0.15rem',
-  },
-  content: {
-    fontSize: '0.9rem',
   },
   close: {
     position: 'absolute',
@@ -24,37 +17,39 @@ const useStyles = makeStyles(theme => ({
     right: '5px',
     fontSize: '1.2678rem',
     cursor: 'pointer',
+    transition: 'transform ease-out 0.2s',
+    willChange: 'transform',
     '&:hover': {
       color: theme.palette.secondary.main,
+      transform: 'rotate(45deg)'
     },
   },
-  textInput: {
-    boxShadow: theme.shadows[1],
-    padding: theme.spacing(0.5, 1),
-    borderRadius: theme.shape.borderRadius,
-    marginTop: theme.spacing(0.5),
-  },
 }));
+
 const InfoListItem = props => {
   const classes = useStyles();
   return (
     <Grid item xs={12}>
       <Paper className={classes.root}>
         <CloseIcon onClick={props.submit} className={classes.close} />
-        {props.showPopup ? (
-          <SubmitPopup
-            click={action => props.click(action)}
-            message="Are you really want to delete this item?"
-          />
-        ) : (
-          ''
-        )}
-        <Typography className={classes.title} variant="h6" component="h6">
-          {props.title}
-        </Typography>
-        <Typography className={classes.content} component="p">
-          {props.content}
-        </Typography>
+          {props.showPopup ? (
+            <SubmitPopup
+              click={action => props.click(action)}
+              message="Are you really want to delete this item?"
+            />
+          ) : (
+            ''
+          )}
+
+          <h6 className="item__title">{props.title}</h6>
+          <div className="item__content">{props.content}</div>
+          <div className="item__info">
+            <div className="item__info-labels">
+              <span className="item__label item__label-opened">opened</span>
+            </div>
+            <div className="item__info-author">{props.author}</div>
+          </div>
+
       </Paper>
     </Grid>
   );

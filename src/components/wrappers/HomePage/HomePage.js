@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './HomePage.sass';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -40,12 +41,13 @@ const HomePage = props => {
       <div className="cBox">
         <div className={classes.root}>
           <Grid container spacing={3}>
-            <Grid item xs={6}>
-              <Typography variant="h6" gutterBottom>
-                Future form ;)
+            <Grid item xs={3}>
+              <Typography className="homepage__responsible" variant="h6" gutterBottom>
+                Current week<br/> responsible person:<br/>
+                <span className="homepage__responsible-name">Golovnia</span>
               </Typography>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={9}>
               <InfoList dataArr={homePageInfoList} />
             </Grid>
           </Grid>

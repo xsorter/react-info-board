@@ -18,6 +18,7 @@ class InfoList extends Component {
         itemList: nextProps.dataArr,
       });
     }
+    console.log(nextProps.dataArr)
     return true;
   }
 
@@ -51,6 +52,7 @@ class InfoList extends Component {
                 submit={() => this.submitHandler(index)}
                 showPopup={this.state.itemList[index].deletionSubmit.booleanValue}
                 title={listItem.title.stringValue}
+                author={listItem.author.stringValue}
                 content={listItem.content.stringValue}
                 key={listItem.id.stringValue}
               />

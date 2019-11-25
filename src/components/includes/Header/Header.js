@@ -1,5 +1,5 @@
 import React from 'react';
-import headerLogoSvg from '../../../logo.svg';
+import headerLogoPng from './logo.png';
 import './Header.sass';
 import Button from '@material-ui/core/Button';
 import DynamicFeedIcon from '@material-ui/icons/DynamicFeed';
@@ -10,8 +10,8 @@ const header = () => (
     <div className="cBox">
       <div className="Header-col">
         <Link to="/" className="Header-logoLink">
-          <img src={headerLogoSvg} className="Header-logo" alt="Header-logo" />
-          <div className="Header-logoLabel">React Info Board</div>
+          <img src={headerLogoPng} className="Header-logo" alt="Header-logo" />
+          <div className="Header-logoLabel">Marketing Retro Board</div>
         </Link>
       </div>
       <div className="Header-col">
