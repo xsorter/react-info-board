@@ -26,7 +26,7 @@ class ResponsiblePerson extends React.Component{
     const name = this.state.shortName ? this.state.shortName.stringValue : 'loading...';
     return(
       <div className="responsible">
-        Current week<br/> responsible person:<br/>
+        Current week retro master:<br/>
         <span className="responsible__name">{name}</span>
       </div>
     )
