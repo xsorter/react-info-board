@@ -3,7 +3,7 @@ import './Notepad.sass';
 import Button from '@material-ui/core/Button';
 import { Editor } from 'react-draft-wysiwyg';
 import { convertToRaw, convertFromRaw } from 'draft-js';
-import { EditorState, SelectionState, Modifier, ContentState } from 'draft-js';
+import { EditorState, ContentState } from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 const nullContent = {

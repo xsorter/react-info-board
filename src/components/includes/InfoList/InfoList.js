@@ -54,6 +54,7 @@ class InfoList extends Component {
                 title={listItem.title.stringValue}
                 author={listItem.author.stringValue}
                 content={listItem.content.stringValue}
+                status={listItem.status.stringValue}
                 key={listItem.id.stringValue}
               />
             );

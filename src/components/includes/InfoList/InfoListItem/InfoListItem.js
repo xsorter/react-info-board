@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
     willChange: 'transform',
     '&:hover': {
       color: theme.palette.secondary.main,
-      transform: 'rotate(45deg)'
+      transform: 'rotate(30deg)'
     },
   },
 }));
@@ -45,7 +45,7 @@ const InfoListItem = props => {
           <div className="item__content">{props.content}</div>
           <div className="item__info">
             <div className="item__info-labels">
-              <span className="item__label item__label-opened">opened</span>
+              <span className={`item__label item__label-${props.status}`}>{props.status}</span>
             </div>
             <div className="item__info-author">{props.author}</div>
           </div>

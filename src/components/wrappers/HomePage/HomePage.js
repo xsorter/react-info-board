@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './HomePage.sass';
+import ResponsiblePerson from '../../includes/ResponsiblePerson/ResponsiblePerson'
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import InfoList from '../../includes/InfoList/InfoList';
 import { EventNote } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import Api from '../../../Api';
+
 const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(3, 0),
@@ -42,10 +43,7 @@ const HomePage = props => {
         <div className={classes.root}>
           <Grid container spacing={3}>
             <Grid item xs={3}>
-              <Typography className="homepage__responsible" variant="h6" gutterBottom>
-                Current week<br/> responsible person:<br/>
-                <span className="homepage__responsible-name">Golovnia</span>
-              </Typography>
+              <ResponsiblePerson/>
             </Grid>
             <Grid item xs={9}>
               <InfoList dataArr={homePageInfoList} />

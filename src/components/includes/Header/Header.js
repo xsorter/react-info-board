@@ -14,12 +14,7 @@ const header = () => (
           <div className="Header-logoLabel">Marketing Retro Board</div>
         </Link>
       </div>
-      <div className="Header-col">
-        <Button variant="contained" color="secondary">
-          <DynamicFeedIcon></DynamicFeedIcon>
-          <span>Archive</span>
-        </Button>
-      </div>
+      <div className="Header-col"></div>
     </div>
   </div>
 );
