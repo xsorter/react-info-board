@@ -1,8 +1,6 @@
 import React from 'react';
 import headerLogoPng from './logo.png';
 import './Header.sass';
-import Button from '@material-ui/core/Button';
-import DynamicFeedIcon from '@material-ui/icons/DynamicFeed';
 import { Link } from 'react-router-dom';
 
 const header = () => (
