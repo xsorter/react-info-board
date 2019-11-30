@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './HomePage.sass';
-import ResponsiblePerson from '../../includes/ResponsiblePerson/ResponsiblePerson'
+import ResponsiblePerson from '../../includes/ResponsiblePerson/ResponsiblePerson';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import InfoList from '../../includes/InfoList/InfoList';
@@ -43,7 +43,7 @@ const HomePage = props => {
         <div className={classes.root}>
           <Grid container spacing={3}>
             <Grid item xs={3}>
-              <ResponsiblePerson/>
+              <ResponsiblePerson />
             </Grid>
             <Grid item xs={9}>
               <InfoList dataArr={homePageInfoList} />
