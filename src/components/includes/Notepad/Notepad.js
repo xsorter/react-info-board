@@ -5,6 +5,7 @@ import { Editor } from 'react-draft-wysiwyg';
 import { convertToRaw, convertFromRaw } from 'draft-js';
 import { EditorState, ContentState } from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import notyContainer from '../../hoc/Noty';
 
 const nullContent = {
   entityMap: {},
@@ -79,4 +80,4 @@ class Notepad extends Component {
   }
 }
 
-export default Notepad;
+export default notyContainer(Notepad, "I'm a message from notepad");
