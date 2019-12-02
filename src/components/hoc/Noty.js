@@ -6,14 +6,23 @@ const notyContainer = (WrappedComponent, data) => {
     constructor(props) {
       super(props);
 
+      this.state = {
+        type: 'success',
+        show: false,
+        message: ''
+      }
+
       console.log('HOC PROPS', props);
       console.log('HOC DATA', data);
       this.data = data;
     }
 
     render() {
+      const noty = this.state;
+      console.log(noty);
       return (
         <div>
+          {noty.show ?
           <div className="noty noty__success">
             <div className="noty__message">
               {this.data ? this.data : `Notify Dummy`}
@@ -22,6 +31,7 @@ const notyContainer = (WrappedComponent, data) => {
               <span>&#x2716;</span>
             </div>
           </div>
+          : null}
           <WrappedComponent></WrappedComponent>
         </div>
       );
