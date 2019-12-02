@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
     willChange: 'transform',
     '&:hover': {
       color: theme.palette.secondary.main,
-      transform: 'rotate(30deg)'
+      transform: 'rotate(30deg)',
     },
   },
 }));
@@ -32,24 +32,23 @@ const InfoListItem = props => {
     <Grid item xs={12}>
       <Paper className={classes.root}>
         <CloseIcon onClick={props.submit} className={classes.close} />
-          {props.showPopup ? (
-            <SubmitPopup
-              click={action => props.click(action)}
-              message="Are you really want to delete this item?"
-            />
-          ) : (
-            ''
-          )}
+        {props.showPopup ? (
+          <SubmitPopup
+            click={action => props.click(action)}
+            message="Are you really want to delete this item?"
+          />
+        ) : (
+          ''
+        )}
 
-          <h6 className="item__title">{props.title}</h6>
-          <div className="item__content">{props.content}</div>
-          <div className="item__info">
-            <div className="item__info-labels">
-              <span className={`item__label item__label-${props.status}`}>{props.status}</span>
-            </div>
-            <div className="item__info-author">{props.author}</div>
+        <h6 className="item__title">{props.title}</h6>
+        <div className="item__content">{props.content}</div>
+        <div className="item__info">
+          <div className="item__info-labels">
+            <span className={`item__label item__label-${props.status}`}>{props.status}</span>
           </div>
-
+          <div className="item__info-author">{props.author}</div>
+        </div>
       </Paper>
     </Grid>
   );

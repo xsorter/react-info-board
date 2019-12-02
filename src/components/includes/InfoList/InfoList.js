@@ -18,7 +18,7 @@ class InfoList extends Component {
         itemList: nextProps.dataArr,
       });
     }
-    console.log(nextProps.dataArr)
+    console.log(nextProps.dataArr);
     return true;
   }
 
