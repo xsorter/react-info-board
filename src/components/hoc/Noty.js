@@ -12,9 +12,13 @@ const notyContainer = (WrappedComponent, data) => {
         message: ''
       }
 
-      console.log('HOC PROPS', props);
       console.log('HOC DATA', data);
+      console.log('PROPS', this.props);
       this.data = data;
+    }
+
+    messageHandler = (message) => {
+      console.log('MESSAGE', message)
     }
 
     render() {
@@ -32,7 +36,7 @@ const notyContainer = (WrappedComponent, data) => {
             </div>
           </div>
           : null}
-          <WrappedComponent></WrappedComponent>
+          <WrappedComponent onMessageFired={(message) => this.messageHandler(message)} ></WrappedComponent>
         </div>
       );
     }

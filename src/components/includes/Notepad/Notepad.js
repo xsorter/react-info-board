@@ -45,13 +45,16 @@ class Notepad extends Component {
       'notepadContent',
       JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent())),
     );
+
+
+
     if(localStorage.getItem('notepadContent')){
       const notyMessage = {
         type: 'success',
         show: true,
         message: 'Message successfully added!'
       }
-      console.log(notyMessage)
+       this.props.onMessageFired(notyMessage);
     }
   };
 
@@ -88,4 +91,4 @@ class Notepad extends Component {
   }
 }
 
-export default notyContainer(Notepad, "I'm a message from notepad");
+export default notyContainer(Notepad);
