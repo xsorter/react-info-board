@@ -6,23 +6,38 @@ const notyContainer = (WrappedComponent, data) => {
     constructor(props) {
       super(props);
 
-      console.log('HOC PROPS', props);
+      this.state = {
+        type: 'info',
+        show: false,
+        message: '',
+      };
+
       console.log('HOC DATA', data);
+      console.log('PROPS', this.props);
       this.data = data;
     }
 
+    messageHandler = message => {
+      const newMessage = { ...message };
+      this.setState(newMessage);
+    };
+
     render() {
+      const noty = this.state;
+      console.log(noty);
       return (
         <div>
-          <div className="noty noty__success">
-            <div className="noty__message">
-              {this.data ? this.data : `Notify Dummy`}
+          {noty.show ? (
+            <div className={`noty noty__${noty.type}`}>
+              <div className="noty__message">{noty.message}</div>
+              <div className="noty__close">
+                <span>&#x2716;</span>
+              </div>
             </div>
-            <div className="noty__close">
-              <span>&#x2716;</span>
-            </div>
-          </div>
-          <WrappedComponent></WrappedComponent>
+          ) : null}
+          <WrappedComponent
+            onMessageFired={message => this.messageHandler(message)}
+          ></WrappedComponent>
         </div>
       );
     }
