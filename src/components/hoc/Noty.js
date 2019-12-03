@@ -29,7 +29,7 @@ const notyContainer = (WrappedComponent, data) => {
           {noty.show ?
           <div className="noty noty__success">
             <div className="noty__message">
-              {this.data ? this.data : `Notify Dummy`}
+              {noty.message}
             </div>
             <div className="noty__close">
               <span>&#x2716;</span>
