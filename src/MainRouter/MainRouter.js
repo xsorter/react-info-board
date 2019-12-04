@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Header from '../components/includes/Header/Header';
 import Notepad from '../components/includes/Notepad/Notepad';
-import MainMenu from '../components/includes/MainMenu/MainMenu';
 import HomePage from '../components/wrappers/HomePage/HomePage';
 import RouterTest from '../components/wrappers/RouterTest/RouterTest';
 import MainFormPage from '../components/wrappers/MainFormPage/MainFormPage';
@@ -12,7 +11,6 @@ export default class MainRouter extends React.Component {
     return (
       <Router>
         <Header />
-        <MainMenu />
         <div>
           <Switch>
             <Route path="/code-snippets">
