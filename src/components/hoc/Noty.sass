@@ -22,6 +22,11 @@
     will-change: opacity
     &:hover
       opacity: 0.5
+  &__general
+    background: #ffffff
+    color: #000
+    .noty__close
+      background: #999
   &__success
     background: #61d800
     border-color: #008b00
@@ -38,3 +43,24 @@
     .noty__close
       background: #E65100
 
+.noty-transitions
+  &-enter
+    opacity: 1
+    left: -400px
+    &-active
+      opacity: 1
+      left: 5px
+      transition: left 400ms
+      //transition: opacity 200ms
+    &-done
+  &-exit
+    //opacity: 1
+    left: 5px
+    transition: all 400ms
+    //transition: opacity 200ms
+    &-active
+      opacity: 0
+      left: -400px
+      transition: all 400ms
+      //transition: opacity 200ms
+    &-done
