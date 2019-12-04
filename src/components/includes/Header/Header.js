@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { Warning, Dns, Code } from '@material-ui/icons';
+import { Home, PostAdd, Code } from '@material-ui/icons';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Link } from 'react-router-dom';
@@ -51,23 +51,23 @@ const Header = () => {
             onClose={handleClose}
             className="Header-menuList"
           >
-            <MenuItem onClick={handleClose} to="/warnings" component={Link}>
+            <MenuItem onClick={handleClose} to="/" component={Link}>
               <ListItemIcon>
-                <Warning fontSize="small" />
+                <Home fontSize="small" />
               </ListItemIcon>
-              <ListItemText primary="Warnings" />
+              <ListItemText primary="Homepage" />
             </MenuItem>
-            <MenuItem onClick={handleClose} to="/general-info" component={Link}>
+            <MenuItem onClick={handleClose} to="/add-new" component={Link}>
               <ListItemIcon>
-                <Dns fontSize="small" />
+                <PostAdd fontSize="small" />
               </ListItemIcon>
-              <ListItemText primary="General Info" />
+              <ListItemText primary="Add new issue" />
             </MenuItem>
-            <MenuItem onClick={handleClose} to="/code-snippets" component={Link}>
+            <MenuItem onClick={handleClose} to="/notepad" component={Link}>
               <ListItemIcon>
                 <Code fontSize="small" />
               </ListItemIcon>
-              <ListItemText primary="Code Snippets" />
+              <ListItemText primary="Notepad" />
             </MenuItem>
           </Menu>
         </div>
