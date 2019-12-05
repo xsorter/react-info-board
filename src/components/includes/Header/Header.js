@@ -26,7 +26,7 @@ const Header = () => {
         <div className="Header-col">
           <Link to="/" className="Header-logoLink">
             <img src={headerLogoPng} className="Header-logo" alt="Header-logo" />
-            <div className="Header-logoLabel">React Info Board</div>
+            <div className="Header-logoLabel">Marketing Retro Board</div>
           </Link>
         </div>
         <div className="Header-col">
