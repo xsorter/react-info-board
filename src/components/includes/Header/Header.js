@@ -32,7 +32,7 @@ const Header = () => {
         <div className="Header-col">
           <Button
             variant="contained"
-            color="secondary"
+            color="primary"
             className="Header-menuTrigger"
             aria-controls="header-menu"
             aria-haspopup="true"
