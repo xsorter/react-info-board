@@ -37,9 +37,23 @@ const useStyles = theme => ({
   },
 });
 class MainForm extends Component {
-  myRef = React.createRef();
+  constructor(props) {
+    super(props);
+    this.state = {
+      labelWidth: 0,
+      responsibleEmployee: '',
+    };
+    this.inputLabel = React.createRef();
+    this.handleSelectChange = event => {
+      this.setState({ responsibleEmployee: event.target.value });
+    };
+  }
+
+  componentDidMount() {
+    this.setState({ labelWidth: this.inputLabel.current.offsetWidth });
+  }
+
   render() {
-    console.log(this.myRef);
     return (
       <div className="InfoList">
         <Grid container spacing={3}>
@@ -78,18 +92,19 @@ class MainForm extends Component {
                 <div className={this.props.classes.inputRowFlex}>
                   <div className={this.props.classes.inputRowFlexLeft}>
                     <FormControl variant="outlined" fullWidth>
-                      <InputLabel ref={this.myRef} id="demo-simple-select-outlined-label">
-                        Issue Type
+                      <InputLabel ref={this.inputLabel} id="demo-simple-select-outlined-label">
+                        Responsible Employee
                       </InputLabel>
                       <Select
                         labelId="demo-simple-select-outlined-label"
                         id="demo-simple-select-outlined"
-                        labelWidth={80}
-                        value=""
+                        labelWidth={this.state.labelWidth}
+                        onChange={this.handleSelectChange}
+                        value={this.state.responsibleEmployee}
                       >
-                        <MenuItem value={10}>Create a task</MenuItem>
-                        <MenuItem value={20}>Add To Confluence</MenuItem>
-                        <MenuItem value={30}>Other</MenuItem>
+                        <MenuItem value="Roman Mekhed">Roman Mekhed</MenuItem>
+                        <MenuItem value="Oleksii Nelin">Oleksii Nelin</MenuItem>
+                        <MenuItem value="Galyna Golovnia">Galyna Golovnia</MenuItem>
                       </Select>
                     </FormControl>
                   </div>
