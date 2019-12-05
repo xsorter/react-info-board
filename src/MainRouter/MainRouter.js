@@ -4,6 +4,7 @@ import Header from '../components/includes/Header/Header';
 import Notepad from '../components/includes/Notepad/Notepad';
 import HomePage from '../components/wrappers/HomePage/HomePage';
 import RouterTest from '../components/wrappers/RouterTest/RouterTest';
+import MainFormPage from '../components/wrappers/MainFormPage/MainFormPage';
 
 export default class MainRouter extends React.Component {
   render() {
@@ -20,6 +21,9 @@ export default class MainRouter extends React.Component {
             </Route>
             <Route path="/warnings">
               <RouterTest data="to warnings" />
+            </Route>
+            <Route path="/add-new">
+              <MainFormPage />
             </Route>
             <Route path="/notepad">
               <Notepad />
