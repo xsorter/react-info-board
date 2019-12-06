@@ -31,8 +31,8 @@ const Header = () => {
         </div>
         <div className="Header-col">
           <Button
-            variant="contained"
-            color="primary"
+            size="large"
+            color="secondary"
             className="Header-menuTrigger"
             aria-controls="header-menu"
             aria-haspopup="true"
