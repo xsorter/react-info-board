@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { Home, PostAdd, Code } from '@material-ui/icons';
+import { Home, PostAdd, Archive } from '@material-ui/icons';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Link } from 'react-router-dom';
@@ -63,11 +63,11 @@ const Header = () => {
               </ListItemIcon>
               <ListItemText primary="Add new issue" />
             </MenuItem>
-            <MenuItem onClick={handleClose} to="/notepad" component={Link}>
+            <MenuItem onClick={handleClose} to="/archive" component={Link}>
               <ListItemIcon>
-                <Code fontSize="small" />
+                <Archive fontSize="small" />
               </ListItemIcon>
-              <ListItemText primary="Notepad" />
+              <ListItemText primary="Archive" />
             </MenuItem>
           </Menu>
         </div>
