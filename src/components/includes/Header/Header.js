@@ -51,7 +51,7 @@ const Header = () => {
             onClose={handleClose}
             className="Header-menuList"
           >
-            <MenuItem onClick={handleClose} to="/" component={Link}>
+            <MenuItem onClick={handleClose} exact to="/" component={Link}>
               <ListItemIcon>
                 <Home fontSize="small" />
               </ListItemIcon>
