@@ -2,8 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Header from '../components/includes/Header/Header';
 import Notepad from '../components/includes/Notepad/Notepad';
-import Archive from '../components/includes/Archive/Archive';
 import HomePage from '../components/wrappers/HomePage/HomePage';
+import ArchivePage from '../components/wrappers/ArchivePage/ArchivePage';
 import RouterTest from '../components/wrappers/RouterTest/RouterTest';
 import MainFormPage from '../components/wrappers/MainFormPage/MainFormPage';
 
@@ -30,7 +30,7 @@ export default class MainRouter extends React.Component {
               <Notepad />
             </Route>
             <Route path="/archive">
-              <Archive />
+              <ArchivePage />
             </Route>
             <Route path="/">
               <HomePage />
