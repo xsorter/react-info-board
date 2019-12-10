@@ -41,7 +41,7 @@ const HeaderMenu = props => {
         onClose={handleClose}
         className="Header-menuList"
       >
-        <MenuItem onClick={handleClose} exact to="/" component={Link}>
+        <MenuItem exact={'true'} onClick={handleClose} to="/" component={Link}>
           <ListItemIcon>
             <Home fontSize="small" />
           </ListItemIcon>

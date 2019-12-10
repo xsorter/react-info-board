@@ -12,8 +12,6 @@ const notyContainer = (WrappedComponent, data) => {
         message: '',
       };
 
-      console.log('HOC DATA', data);
-      console.log('PROPS', this.props);
       this.data = data;
     }
 
@@ -24,7 +22,6 @@ const notyContainer = (WrappedComponent, data) => {
 
     render() {
       const noty = this.state;
-      console.log(noty);
       return (
         <div>
           {noty.show ? (
