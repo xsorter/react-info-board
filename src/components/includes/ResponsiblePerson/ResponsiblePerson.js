@@ -21,7 +21,7 @@ const useStyles = theme => ({
   },
 });
 
-const slackDomain = "blackrockmarketing.slack.com/team"
+const slackDomain = "blackrockmarketing.slack.com/team";
 
 class ResponsiblePerson extends React.Component {
   constructor(props) {
@@ -46,6 +46,7 @@ class ResponsiblePerson extends React.Component {
     const name = this.state.shortName ? this.state.shortName.stringValue : 'loading...';
     const fullName = this.state.fullName ? this.state.fullName.stringValue: 'loading...';
     const slackId = this.state.slackId ? this.state.slackId.stringValue : 'U9M190S4X';
+
     return (
       <Paper className={'ResponsiblePerson ' + this.props.classes.root}>
         <Avatar alt="Remy Sharp" className={this.props.classes.avatar} src={AvatarImage} />
