@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 const PROJECT_ID = 'infoboard-react';
 const COLLECTION = 'retrospective';
 const DOCUMENT_ID = '1';
@@ -47,11 +49,10 @@ const getData = async () => {
 };
 
 const getUsers = async () => {
-  const response = await fetch(
+  const response = await axios.get(
     `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/users/`,
   );
-  const result = await response.json();
-  return result;
+  return response.data;
 };
 
 const getSingleItem = async () => {
