@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.sass';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import axios from 'axios';
+
+axios.defaults.baseURL = 'https://firestore.googleapis.com/v1/projects/infoboard-react/databases/(default)/documents';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

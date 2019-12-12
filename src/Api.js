@@ -49,9 +49,7 @@ const getData = async () => {
 };
 
 const getUsers = async () => {
-  const response = await axios.get(
-    `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/users/`,
-  );
+  const response = await axios.get(`/users/`);
   return response.data;
 };
 
