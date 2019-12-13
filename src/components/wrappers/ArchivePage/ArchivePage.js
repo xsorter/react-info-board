@@ -13,33 +13,32 @@ const useStyles = theme => ({
 });
 
 class ArchivePage extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-    render() {
-        return (
-            <div className="ArchivePage">
-            <div className="cBox">
-                <div className={this.props.classes.root}>
-                    <Grid container spacing={3}>
-                        <Grid item xs={12}>
-                            <Typography color="primary" variant="h5" component="h5" gutterBottom>
-                                Archive
-                            </Typography>
-                            <Archive />
-                            <Archive />
-                            <Archive />
-                        </Grid>
-                    </Grid>
-                </div>
-            </div>
-            <Link title="Notepad" className="button__notepad" to="/notepad">
-                <EventNote>Notepad</EventNote>
-            </Link>
-            </div>
-        );
-    }
-};
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+      <div className="ArchivePage">
+        <div className="cBox">
+          <div className={this.props.classes.root}>
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <Typography color="primary" variant="h5" component="h5" gutterBottom>
+                  Archive
+                </Typography>
+                <Archive />
+                <Archive />
+                <Archive />
+              </Grid>
+            </Grid>
+          </div>
+        </div>
+        <Link title="Notepad" className="button__notepad" to="/notepad">
+          <EventNote>Notepad</EventNote>
+        </Link>
+      </div>
+    );
+  }
+}
 
 export default withStyles(useStyles)(ArchivePage);
-

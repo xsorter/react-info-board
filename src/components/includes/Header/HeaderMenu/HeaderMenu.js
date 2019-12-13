@@ -18,7 +18,7 @@ const HeaderMenu = props => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  return(
+  return (
     <div>
       <Button
         size="large"
@@ -61,7 +61,7 @@ const HeaderMenu = props => {
         </MenuItem>
       </Menu>
     </div>
-  )
-}
+  );
+};
 
 export default HeaderMenu;

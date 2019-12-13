@@ -27,7 +27,7 @@ const postConfig = {
 };
 
 const setData = async () => {
-  const response = await fetch(
+  const response = await axios.post(
     testItem.edit ? `/${COLLECTION}/${testItem.id}` : `/${COLLECTION}?documentId=${testItem.id}`,
     postConfig,
   );
@@ -35,7 +35,7 @@ const setData = async () => {
 };
 
 const getData = async () => {
-  const response = await fetch(`/${COLLECTION}/`);
+  const response = await axios.get(`/${COLLECTION}/`);
   return response.data;
 };
 
@@ -45,12 +45,12 @@ const getUsers = async () => {
 };
 
 const getSingleItem = async () => {
-  const response = await fetch(`/${COLLECTION}/${DOCUMENT_ID}`);
+  const response = await axios.get(`/${COLLECTION}/${DOCUMENT_ID}`);
   return response.data;
 };
 
 const deleteData = async () => {
-  const response = await fetch(`/${COLLECTION}/${DOCUMENT_ID}`, {
+  const response = await axios.delete(`/${COLLECTION}/${DOCUMENT_ID}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
