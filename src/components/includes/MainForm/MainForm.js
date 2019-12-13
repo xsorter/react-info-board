@@ -10,6 +10,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
+import Api from '../../../Api';
 
 const useStyles = theme => ({
   root: {
@@ -36,6 +37,7 @@ const useStyles = theme => ({
     justifyContent: 'flex-end',
   },
 });
+
 class MainForm extends Component {
   constructor(props) {
     super(props);
@@ -50,6 +52,16 @@ class MainForm extends Component {
   }
 
   componentDidMount() {
+    Api.getUsers().then(users => {
+      const items = [];
+      users.documents.map(e => {
+        items.push(e.fields);
+        return null;
+      });
+
+      console.log('USERS', items);
+    });
+
     this.setState({ labelWidth: this.inputLabel.current.offsetWidth });
   }
 
