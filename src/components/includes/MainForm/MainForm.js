@@ -10,6 +10,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
+import Api from '../../../Api';
 
 const useStyles = theme => ({
   root: {
@@ -36,10 +37,12 @@ const useStyles = theme => ({
     justifyContent: 'flex-end',
   },
 });
+
 class MainForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      users: [],
       labelWidth: 0,
       responsibleEmployee: '',
     };
@@ -50,10 +53,26 @@ class MainForm extends Component {
   }
 
   componentDidMount() {
-    this.setState({ labelWidth: this.inputLabel.current.offsetWidth });
+    Api.getUsers().then(users => {
+      const items = [];
+      users.documents.map(e => {
+        items.push(e.fields);
+        return null;
+      });
+
+      this.setState({
+        users: items,
+      });
+    });
+
+    this.setState({
+      labelWidth: this.inputLabel.current.offsetWidth,
+    });
   }
 
   render() {
+    const users = this.state.users;
+    console.log(users);
     return (
       <div className="InfoList">
         <Grid container spacing={3}>
@@ -102,9 +121,13 @@ class MainForm extends Component {
                         onChange={this.handleSelectChange}
                         value={this.state.responsibleEmployee}
                       >
-                        <MenuItem value="Roman Mekhed">Roman Mekhed</MenuItem>
-                        <MenuItem value="Oleksii Nelin">Oleksii Nelin</MenuItem>
-                        <MenuItem value="Galyna Golovnia">Galyna Golovnia</MenuItem>
+                        {users.map((e, i) => {
+                          return (
+                            <MenuItem key={i} value={e.shortName.stringValue}>
+                              {e.fullName.stringValue}
+                            </MenuItem>
+                          );
+                        })}
                       </Select>
                     </FormControl>
                   </div>

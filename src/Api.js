@@ -1,4 +1,5 @@
-const PROJECT_ID = 'infoboard-react';
+import axios from 'axios';
+
 const COLLECTION = 'retrospective';
 const DOCUMENT_ID = '1';
 
@@ -26,55 +27,36 @@ const postConfig = {
 };
 
 const setData = async () => {
-  const response = await fetch(
-    testItem.edit
-      ? `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/
-    (default)/documents/${COLLECTION}/${testItem.id}`
-      : `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/
-    (default)/documents/${COLLECTION}?documentId=${testItem.id}`,
+  const response = await axios.post(
+    testItem.edit ? `/${COLLECTION}/${testItem.id}` : `/${COLLECTION}?documentId=${testItem.id}`,
     postConfig,
   );
-  const result = await response.json();
-  return result;
+  return response.data;
 };
 
 const getData = async () => {
-  const response = await fetch(
-    `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/${COLLECTION}/`,
-  );
-  const result = await response.json();
-  return result;
+  const response = await axios.get(`/${COLLECTION}/`);
+  return response.data;
 };
 
 const getUsers = async () => {
-  const response = await fetch(
-    `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/users/`,
-  );
-  const result = await response.json();
-  return result;
+  const response = await axios.get(`/users/`);
+  return response.data;
 };
 
 const getSingleItem = async () => {
-  const response = await fetch(
-    `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/${COLLECTION}/${DOCUMENT_ID}`,
-  );
-  const result = await response.json();
-  return result;
+  const response = await axios.get(`/${COLLECTION}/${DOCUMENT_ID}`);
+  return response.data;
 };
 
 const deleteData = async () => {
-  const response = await fetch(
-    `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/
-    (default)/documents/${COLLECTION}/${DOCUMENT_ID}`,
-    {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+  const response = await axios.delete(`/${COLLECTION}/${DOCUMENT_ID}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
     },
-  );
-  const result = await response.json();
-  return result;
+  });
+  return response.data;
 };
 
 export default { getData, setData, deleteData, getSingleItem, getUsers };
