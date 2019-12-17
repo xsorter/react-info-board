@@ -3,7 +3,7 @@ import axios from 'axios';
 const COLLECTION = 'retrospective';
 const DOCUMENT_ID = '1';
 
-const testItem = {
+/*const testItem = {
   edit: false,
   id: 43,
   requestBody: {
@@ -12,25 +12,14 @@ const testItem = {
       text: { stringValue: 'this is test text from POST request' },
     },
   },
-};
+};*/
 
-const postConfig = {
-  method: testItem.edit ? 'PATCH' : 'POST',
-  cache: 'no-cache',
-  credentials: 'same-origin',
-  connection: 'keep-alive',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  referrer: 'no-referrer',
-  body: JSON.stringify(testItem.requestBody),
-};
-
-const setData = async () => {
-  const response = await axios.post(
-    testItem.edit ? `/${COLLECTION}/${testItem.id}` : `/${COLLECTION}?documentId=${testItem.id}`,
-    postConfig,
-  );
+const setData = async data => {
+  const response = await axios({
+    method: data.edit ? 'PATCH' : 'POST',
+    url: data.edit ? `/${COLLECTION}/${data.id}/` : `/${COLLECTION}?documentId=${data.id}`,
+    data: data.requestBody,
+  });
   return response.data;
 };
 
