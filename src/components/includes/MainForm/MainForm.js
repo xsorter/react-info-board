@@ -11,6 +11,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import Api from '../../../Api';
+import helpers from '../../../Helpers';
 
 const useStyles = theme => ({
   root: {
@@ -70,6 +71,28 @@ class MainForm extends Component {
     });
   }
 
+  submitHandler = e => {
+    e.preventDefault();
+    console.log('SUBMIT');
+    const uuid = helpers.idGenerator();
+    Api.setData({
+      edit: false,
+      id: uuid,
+      requestBody: {
+        fields: {
+          title: { stringValue: 'test from form' },
+          content: { stringValue: 'test text from form' },
+          status: { stringValue: 'opened' },
+          deletionSubmit: { booleanValue: false },
+          author: { stringValue: 'Nelin' },
+          id: { stringValue: uuid },
+        },
+      },
+    }).then(resp => {
+      console.log('RESPONSE', resp);
+    });
+  };
+
   render() {
     const users = this.state.users;
     console.log(users);
@@ -89,7 +112,7 @@ class MainForm extends Component {
                 <br />
                 Quos blanditiis cupiditate numquam fugiat deleniti?
               </Typography>
-              <form noValidate autoComplete="off">
+              <form onSubmit={this.submitHandler} noValidate autoComplete="off">
                 <div className={this.props.classes.inputRow}>
                   <TextField
                     id="outlined-basic"
@@ -132,7 +155,7 @@ class MainForm extends Component {
                     </FormControl>
                   </div>
                   <div className={this.props.classes.inputRowFlexRight}>
-                    <Button variant="contained" color="primary" fullWidth>
+                    <Button type="submit" variant="contained" color="primary" fullWidth>
                       Submit
                     </Button>
                   </div>
