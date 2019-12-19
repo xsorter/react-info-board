@@ -48,9 +48,6 @@ class MainForm extends Component {
       responsibleEmployee: '',
     };
     this.inputLabel = React.createRef();
-    this.handleSelectChange = event => {
-      this.setState({ responsibleEmployee: event.target.value });
-    };
   }
 
   componentDidMount() {
@@ -71,7 +68,12 @@ class MainForm extends Component {
     });
   }
 
+  handleSelectChange = event => {
+    this.setState({ responsibleEmployee: event.target.value });
+  };
+
   submitHandler = e => {
+    console.log(this.state.responsibleEmployee);
     e.preventDefault();
     console.log('SUBMIT');
     const uuid = helpers.idGenerator();
@@ -80,11 +82,11 @@ class MainForm extends Component {
       id: uuid,
       requestBody: {
         fields: {
-          title: { stringValue: 'test from form' },
+          title: { stringValue: 'test4 from form' },
           content: { stringValue: 'test text from form' },
           status: { stringValue: 'opened' },
           deletionSubmit: { booleanValue: false },
-          author: { stringValue: 'Nelin' },
+          author: { stringValue: this.state.responsibleEmployee },
           id: { stringValue: uuid },
         },
       },
