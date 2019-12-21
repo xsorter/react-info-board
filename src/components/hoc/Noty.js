@@ -11,8 +11,7 @@ const notyContainer = (WrappedComponent) => {
         show: false,
         message: '',
       };
-      
-      this.data = data;
+
     }
 
     messageHandler = message => {
