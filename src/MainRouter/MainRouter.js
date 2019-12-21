@@ -3,7 +3,9 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Header from '../components/includes/Header/Header';
 import Notepad from '../components/includes/Notepad/Notepad';
 import HomePage from '../components/wrappers/HomePage/HomePage';
+import ArchivePage from '../components/wrappers/ArchivePage/ArchivePage';
 import RouterTest from '../components/wrappers/RouterTest/RouterTest';
+import MainFormPage from '../components/wrappers/MainFormPage/MainFormPage';
 
 export default class MainRouter extends React.Component {
   render() {
@@ -21,8 +23,14 @@ export default class MainRouter extends React.Component {
             <Route path="/warnings">
               <RouterTest data="to warnings" />
             </Route>
+            <Route path="/add-new">
+              <MainFormPage />
+            </Route>
             <Route path="/notepad">
               <Notepad />
+            </Route>
+            <Route path="/archive">
+              <ArchivePage />
             </Route>
             <Route path="/">
               <HomePage />

@@ -11,6 +11,8 @@ const notyContainer = (WrappedComponent) => {
         show: false,
         message: '',
       };
+      
+      this.data = data;
     }
 
     messageHandler = message => {
@@ -27,7 +29,6 @@ const notyContainer = (WrappedComponent) => {
 
     render() {
       const noty = this.state;
-      console.log(noty);
       return (
         <div>
           <CSSTransition unmountOnExit in={noty.show} timeout={800} classNames="noty-transitions">
