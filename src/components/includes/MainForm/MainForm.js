@@ -45,6 +45,8 @@ class MainForm extends Component {
     this.state = {
       users: [],
       labelWidth: 0,
+      formTitle: '',
+      formContent: '',
       responsibleEmployee: '',
     };
     this.inputLabel = React.createRef();
@@ -68,26 +70,35 @@ class MainForm extends Component {
     });
   }
 
+  handleContentChange = event => {
+    this.setState({ formContent: event.target.value })
+  }
+
+  handleTitleChange = event => {
+    this.setState({ formTitle: event.target.value })
+  }
+
   handleSelectChange = event => {
     this.setState({ responsibleEmployee: event.target.value });
   };
 
   submitHandler = e => {
-    console.log(this.state.responsibleEmployee);
     e.preventDefault();
-    console.log('SUBMIT');
     const uuid = helpers.idGenerator();
+    const date = new Date();
+
     Api.setData({
       edit: false,
       id: uuid,
       requestBody: {
         fields: {
-          title: { stringValue: 'test4 from form' },
-          content: { stringValue: 'test text from form' },
+          title: { stringValue: this.state.formTitle },
+          content: { stringValue: this.state.formContent },
           status: { stringValue: 'opened' },
           deletionSubmit: { booleanValue: false },
           author: { stringValue: this.state.responsibleEmployee },
           id: { stringValue: uuid },
+          timestampClient: { stringValue: date},
         },
       },
     }).then(resp => {
@@ -120,6 +131,7 @@ class MainForm extends Component {
                     id="outlined-basic"
                     label="Issue Subject"
                     variant="outlined"
+                    onChange={this.handleTitleChange}
                     fullWidth
                   />
                 </div>
@@ -130,6 +142,7 @@ class MainForm extends Component {
                     multiline
                     rows="4"
                     variant="outlined"
+                    onChange={this.handleContentChange}
                     fullWidth
                   />
                 </div>

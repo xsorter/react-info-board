@@ -1,18 +1,6 @@
 import axios from 'axios';
 
 const COLLECTION = 'retrospective';
-const DOCUMENT_ID = '1';
-
-/*const testItem = {
-  edit: false,
-  id: 43,
-  requestBody: {
-    fields: {
-      title: { stringValue: 'test data to POST' },
-      text: { stringValue: 'this is test text from POST request' },
-    },
-  },
-};*/
 
 const setData = async data => {
   const response = await axios({
@@ -24,7 +12,7 @@ const setData = async data => {
 };
 
 const getData = async () => {
-  const response = await axios.get(`/${COLLECTION}/`);
+  const response = await axios.get(`/${COLLECTION}?orderBy=timestampClient+desc`);
   return response.data;
 };
 
@@ -33,13 +21,13 @@ const getUsers = async () => {
   return response.data;
 };
 
-const getSingleItem = async () => {
-  const response = await axios.get(`/${COLLECTION}/${DOCUMENT_ID}`);
+const getSingleItem = async (documentId) => {
+  const response = await axios.get(`/${COLLECTION}/${documentId}`);
   return response.data;
 };
 
-const deleteData = async () => {
-  const response = await axios.delete(`/${COLLECTION}/${DOCUMENT_ID}`, {
+const deleteData = async (documentId) => {
+  const response = await axios.delete(`/${COLLECTION}/${documentId}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
