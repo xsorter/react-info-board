@@ -87,6 +87,7 @@ class MainForm extends Component {
     e.preventDefault();
     const uuid = helpers.idGenerator();
     const date = new Date();
+    let target = e.currentTarget;
 
     Api.setData({
       edit: false,
@@ -104,6 +105,7 @@ class MainForm extends Component {
       },
     }).then(resp => {
       if(resp.name) {
+        target.reset();
         const notyMessage = {
           type: 'success',
           show: true,
