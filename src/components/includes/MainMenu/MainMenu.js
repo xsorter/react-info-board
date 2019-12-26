@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './MainMenu.sass';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import { Warning, Dns, Code } from '@material-ui/icons';
+import { Warning, Dns, Code, Settings } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 
 export default class MainMenu extends Component {
@@ -23,6 +23,7 @@ export default class MainMenu extends Component {
             <Tab to="/warnings" icon={<Warning />} label="Warnings" component={Link} />
             <Tab to="/general-info" icon={<Dns />} label="General Info" component={Link} />
             <Tab to="/code-snippets" icon={<Code />} label="Code Snippets" component={Link} />
+            <Tab to="/settings" icon={<Settings />} label="Settings" component={Link} />
           </Tabs>
         </div>
       </div>
