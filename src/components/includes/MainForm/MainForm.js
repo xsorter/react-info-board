@@ -12,6 +12,7 @@ import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import Api from '../../../Api';
 import helpers from '../../../Helpers';
+import notyContainer from '../../hoc/Noty';
 
 const useStyles = theme => ({
   root: {
@@ -86,6 +87,7 @@ class MainForm extends Component {
     e.preventDefault();
     const uuid = helpers.idGenerator();
     const date = new Date();
+    let target = e.currentTarget;
 
     Api.setData({
       edit: false,
@@ -102,13 +104,21 @@ class MainForm extends Component {
         },
       },
     }).then(resp => {
+      if(resp.name) {
+        target.reset();
+        const notyMessage = {
+          type: 'success',
+          show: true,
+          message: 'Record added!',
+        };
+        this.props.onMessageFired(notyMessage);
+      }
       console.log('RESPONSE', resp);
     });
   };
 
   render() {
     const users = this.state.users;
-    console.log(users);
     return (
       <div className="InfoList">
         <Grid container spacing={3}>
@@ -184,4 +194,4 @@ class MainForm extends Component {
   }
 }
 
-export default withStyles(useStyles)(MainForm);
+export default notyContainer(withStyles(useStyles)(MainForm));

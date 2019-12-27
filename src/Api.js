@@ -16,8 +16,11 @@ const getData = async () => {
   return response.data;
 };
 
-const getUsers = async () => {
-  const response = await axios.get(`/users/`);
+const getUsers = async (isResponsible) => {
+  const response = await axios({
+    method: 'GET',
+    url: isResponsible ? `/responsibleUser/` : `/users/`,
+  });
   return response.data;
 };
 
