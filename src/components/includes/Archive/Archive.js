@@ -22,7 +22,7 @@ class Archive extends React.Component {
   render() {
     return (
       <div className="Archive">
-        <Paper boxShadow={3} className="Archive__paper">
+        <Paper className="Archive__paper">
           <Typography variant="h6" gutterBottom>
             10.12.19
           </Typography>
