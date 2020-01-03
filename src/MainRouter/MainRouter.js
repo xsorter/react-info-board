@@ -7,6 +7,8 @@ import ArchivePage from '../components/wrappers/ArchivePage/ArchivePage';
 import RouterTest from '../components/wrappers/RouterTest/RouterTest';
 import MainFormPage from '../components/wrappers/MainFormPage/MainFormPage';
 import Settings from '../components/includes/Settings/Settings';
+import { EventNote } from '@material-ui/icons';
+import { Link } from 'react-router-dom';
 
 export default class MainRouter extends React.Component {
   render() {
@@ -41,6 +43,9 @@ export default class MainRouter extends React.Component {
             </Route>
           </Switch>
         </div>
+        <Link title="Notepad" className="button__notepad" to="/notepad">
+          <EventNote>Notepad</EventNote>
+        </Link>
       </Router>
     );
   }
