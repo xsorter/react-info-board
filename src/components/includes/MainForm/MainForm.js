@@ -10,6 +10,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
+import Api from '../../../Api';
+import helpers from '../../../Helpers';
+import notyContainer from '../../hoc/Noty';
 
 const useStyles = theme => ({
   root: {
@@ -36,24 +39,86 @@ const useStyles = theme => ({
     justifyContent: 'flex-end',
   },
 });
+
 class MainForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      users: [],
       labelWidth: 0,
+      formTitle: '',
+      formContent: '',
       responsibleEmployee: '',
     };
     this.inputLabel = React.createRef();
-    this.handleSelectChange = event => {
-      this.setState({ responsibleEmployee: event.target.value });
-    };
   }
 
   componentDidMount() {
-    this.setState({ labelWidth: this.inputLabel.current.offsetWidth });
+    Api.getUsers().then(users => {
+      const items = [];
+      users.documents.map(e => {
+        items.push(e.fields);
+        return null;
+      });
+
+      this.setState({
+        users: items,
+      });
+    });
+
+    this.setState({
+      labelWidth: this.inputLabel.current.offsetWidth,
+    });
   }
 
+  handleContentChange = event => {
+    this.setState({ formContent: event.target.value })
+  }
+
+  handleTitleChange = event => {
+    this.setState({ formTitle: event.target.value })
+  }
+
+  handleSelectChange = event => {
+    this.setState({ responsibleEmployee: event.target.value });
+  };
+
+  submitHandler = e => {
+    e.preventDefault();
+    const uuid = helpers.idGenerator();
+    const date = new Date();
+    let target = e.currentTarget;
+
+    Api.setData({
+      edit: false,
+      id: uuid,
+      requestBody: {
+        fields: {
+          title: { stringValue: this.state.formTitle },
+          content: { stringValue: this.state.formContent },
+          status: { stringValue: 'opened' },
+          deletionSubmit: { booleanValue: false },
+          author: { stringValue: this.state.responsibleEmployee },
+          id: { stringValue: uuid },
+          timestampClient: { stringValue: date},
+        },
+      },
+    }).then(resp => {
+      if(resp.name) {
+        target.reset();
+        const notyMessage = {
+          type: 'success',
+          show: true,
+          message: 'Record added!',
+        };
+        this.props.onMessageFired(notyMessage);
+      }
+      console.log('RESPONSE', resp);
+    });
+  };
+
   render() {
+    const users = this.state.users;
     return (
       <div className="InfoList">
         <Grid container spacing={3}>
@@ -70,12 +135,13 @@ class MainForm extends Component {
                 <br />
                 Quos blanditiis cupiditate numquam fugiat deleniti?
               </Typography>
-              <form noValidate autoComplete="off">
+              <form onSubmit={this.submitHandler} noValidate autoComplete="off">
                 <div className={this.props.classes.inputRow}>
                   <TextField
                     id="outlined-basic"
                     label="Issue Subject"
                     variant="outlined"
+                    onChange={this.handleTitleChange}
                     fullWidth
                   />
                 </div>
@@ -86,6 +152,7 @@ class MainForm extends Component {
                     multiline
                     rows="4"
                     variant="outlined"
+                    onChange={this.handleContentChange}
                     fullWidth
                   />
                 </div>
@@ -102,14 +169,18 @@ class MainForm extends Component {
                         onChange={this.handleSelectChange}
                         value={this.state.responsibleEmployee}
                       >
-                        <MenuItem value="Roman Mekhed">Roman Mekhed</MenuItem>
-                        <MenuItem value="Oleksii Nelin">Oleksii Nelin</MenuItem>
-                        <MenuItem value="Galyna Golovnia">Galyna Golovnia</MenuItem>
+                        {users.map((e, i) => {
+                          return (
+                            <MenuItem key={i} value={e.shortName.stringValue}>
+                              {e.fullName.stringValue}
+                            </MenuItem>
+                          );
+                        })}
                       </Select>
                     </FormControl>
                   </div>
                   <div className={this.props.classes.inputRowFlexRight}>
-                    <Button variant="contained" color="primary" fullWidth>
+                    <Button type="submit" variant="contained" color="primary" fullWidth>
                       Submit
                     </Button>
                   </div>
@@ -123,4 +194,4 @@ class MainForm extends Component {
   }
 }
 
-export default withStyles(useStyles)(MainForm);
+export default notyContainer(withStyles(useStyles)(MainForm));

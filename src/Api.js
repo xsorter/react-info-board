@@ -1,80 +1,42 @@
-const PROJECT_ID = 'infoboard-react';
+import axios from 'axios';
+
 const COLLECTION = 'retrospective';
-const DOCUMENT_ID = '1';
 
-const testItem = {
-  edit: false,
-  id: 43,
-  requestBody: {
-    fields: {
-      title: { stringValue: 'test data to POST' },
-      text: { stringValue: 'this is test text from POST request' },
-    },
-  },
-};
-
-const postConfig = {
-  method: testItem.edit ? 'PATCH' : 'POST',
-  cache: 'no-cache',
-  credentials: 'same-origin',
-  connection: 'keep-alive',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  referrer: 'no-referrer',
-  body: JSON.stringify(testItem.requestBody),
-};
-
-const setData = async () => {
-  const response = await fetch(
-    testItem.edit
-      ? `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/
-    (default)/documents/${COLLECTION}/${testItem.id}`
-      : `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/
-    (default)/documents/${COLLECTION}?documentId=${testItem.id}`,
-    postConfig,
-  );
-  const result = await response.json();
-  return result;
+const setData = async data => {
+  const response = await axios({
+    method: data.edit ? 'PATCH' : 'POST',
+    url: data.edit ? `/${COLLECTION}/${data.id}/` : `/${COLLECTION}?documentId=${data.id}`,
+    data: data.requestBody,
+  });
+  return response.data;
 };
 
 const getData = async () => {
-  const response = await fetch(
-    `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/${COLLECTION}/`,
-  );
-  const result = await response.json();
-  return result;
+  const response = await axios.get(`/${COLLECTION}?orderBy=timestampClient+desc`);
+  return response.data;
 };
 
-const getUsers = async () => {
-  const response = await fetch(
-    `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/users/`,
-  );
-  const result = await response.json();
-  return result;
+const getUsers = async (isResponsible) => {
+  const response = await axios({
+    method: 'GET',
+    url: isResponsible ? `/responsibleUser/` : `/users/`,
+  });
+  return response.data;
 };
 
-const getSingleItem = async () => {
-  const response = await fetch(
-    `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/${COLLECTION}/${DOCUMENT_ID}`,
-  );
-  const result = await response.json();
-  return result;
+const getSingleItem = async (documentId) => {
+  const response = await axios.get(`/${COLLECTION}/${documentId}`);
+  return response.data;
 };
 
-const deleteData = async () => {
-  const response = await fetch(
-    `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/
-    (default)/documents/${COLLECTION}/${DOCUMENT_ID}`,
-    {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+const deleteData = async (documentId) => {
+  const response = await axios.delete(`/${COLLECTION}/${documentId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
     },
-  );
-  const result = await response.json();
-  return result;
+  });
+  return response.data;
 };
 
 export default { getData, setData, deleteData, getSingleItem, getUsers };

@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { Home, PostAdd, Archive } from '@material-ui/icons';
+import { Home, PostAdd, Archive, Settings } from '@material-ui/icons';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Link } from 'react-router-dom';
@@ -18,7 +18,7 @@ const HeaderMenu = props => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  return(
+  return (
     <div>
       <Button
         size="large"
@@ -59,9 +59,15 @@ const HeaderMenu = props => {
           </ListItemIcon>
           <ListItemText primary="Archive" />
         </MenuItem>
+        <MenuItem onClick={handleClose} to="/settings" component={Link}>
+          <ListItemIcon>
+            <Settings fontSize="small" />
+          </ListItemIcon>
+          <ListItemText primary="Settings" />
+        </MenuItem>
       </Menu>
     </div>
-  )
-}
+  );
+};
 
 export default HeaderMenu;

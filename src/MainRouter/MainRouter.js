@@ -6,6 +6,7 @@ import HomePage from '../components/wrappers/HomePage/HomePage';
 import ArchivePage from '../components/wrappers/ArchivePage/ArchivePage';
 import RouterTest from '../components/wrappers/RouterTest/RouterTest';
 import MainFormPage from '../components/wrappers/MainFormPage/MainFormPage';
+import Settings from '../components/includes/Settings/Settings';
 
 export default class MainRouter extends React.Component {
   render() {
@@ -31,6 +32,9 @@ export default class MainRouter extends React.Component {
             </Route>
             <Route path="/archive">
               <ArchivePage />
+            </Route>
+            <Route path="/settings">
+              <Settings />
             </Route>
             <Route path="/">
               <HomePage />

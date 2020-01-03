@@ -5,7 +5,6 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
-import AvatarImage from './avatar.jpg';
 
 const useStyles = theme => ({
   root: {
@@ -30,26 +29,30 @@ class ResponsiblePerson extends React.Component {
   }
 
   componentDidMount() {
-    Api.getUsers().then(users => {
-      const items = [];
-      users.documents.map(user => {
-        if (user.fields.isResponsible.booleanValue) {
-          items.push(user.fields);
-        }
-        return null;
-      });
-      this.setState(items[0]);
+    Api.getUsers(true).then(user => {
+      const currentUser = user.documents[0].fields.id.stringValue;
+      return currentUser
+    })
+    .then(current => {
+      Api.getUsers().then(allUsers => {
+        allUsers.documents.map(user => {
+          if(user.fields.shortName.stringValue === current){
+            this.setState(user.fields)
+          }
+          return null;
+        });
+      })
     });
   }
 
   render() {
     const name = this.state.shortName ? this.state.shortName.stringValue : 'loading...';
-    const fullName = this.state.fullName ? this.state.fullName.stringValue: 'loading...';
+    const fullName = this.state.fullName ? this.state.fullName.stringValue : 'loading...';
     const slackId = this.state.slackId ? this.state.slackId.stringValue : 'U9M190S4X';
 
     return (
       <Paper className={'ResponsiblePerson ' + this.props.classes.root}>
-        <Avatar alt="Remy Sharp" className={this.props.classes.avatar} src={AvatarImage} />
+        <Avatar alt="Profile" className={this.props.classes.avatar} src={`/images/${name}.jpg`} />
         <Typography variant="h6">{fullName}</Typography>
         <Typography color="textSecondary" variant="caption" display="block" gutterBottom>
           Current week retro master
