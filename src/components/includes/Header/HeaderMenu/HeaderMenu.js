@@ -6,7 +6,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { Home, PostAdd, Archive, Settings } from '@material-ui/icons';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import './HeaderMenu.sass';
 
 const HeaderMenu = props => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -32,7 +33,7 @@ const HeaderMenu = props => {
       </Button>
       <Menu
         id="header-menu"
-        anchorEl={anchorEl}
+        anchorEl={anchorEl} 
         getContentAnchorEl={null}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
@@ -40,26 +41,26 @@ const HeaderMenu = props => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
         className="Header-menuList"
-      >
-        <MenuItem exact={'true'} onClick={handleClose} to="/" component={Link}>
+      > 
+        <MenuItem exact={true} onClick={handleClose} to="/" component={NavLink}>
           <ListItemIcon>
             <Home fontSize="small" />
           </ListItemIcon>
           <ListItemText primary="Homepage" />
         </MenuItem>
-        <MenuItem onClick={handleClose} to="/add-new" component={Link}>
+        <MenuItem onClick={handleClose} to="/add-new" component={NavLink}>
           <ListItemIcon>
             <PostAdd fontSize="small" />
           </ListItemIcon>
           <ListItemText primary="Add new issue" />
         </MenuItem>
-        <MenuItem onClick={handleClose} to="/archive" component={Link}>
+        <MenuItem onClick={handleClose} to="/archive" component={NavLink}>
           <ListItemIcon>
             <Archive fontSize="small" />
           </ListItemIcon>
           <ListItemText primary="Archive" />
         </MenuItem>
-        <MenuItem onClick={handleClose} to="/settings" component={Link}>
+        <MenuItem onClick={handleClose} to="/settings" component={NavLink}>
           <ListItemIcon>
             <Settings fontSize="small" />
           </ListItemIcon>
