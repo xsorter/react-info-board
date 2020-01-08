@@ -13,6 +13,7 @@ class Settings extends React.Component {
 
     this.state = {
       users: [],
+      responsibleEmployee: '',
       labelWidth: 0,
     };
 
@@ -37,6 +38,10 @@ class Settings extends React.Component {
     });
   }
 
+  handleSelectChange = event => {
+    this.setState({ responsibleEmployee: event.target.value });
+  };
+
   //TODO: save chosen user id to current user table
   render() {
     const users = this.state.users;
@@ -52,8 +57,19 @@ class Settings extends React.Component {
                 <InputLabel ref={this.inputLabel} id="outlined-label">
                   Responsible Employee
                 </InputLabel>
-                <Select labelId="outlined-label" labelWidth={this.state.labelWidth} value="">
-                  <MenuItem value="">Mekhed</MenuItem>
+                <Select
+                  onChange={this.handleSelectChange}
+                  value={this.state.responsibleEmployee}
+                  labelId="outlined-label"
+                  labelWidth={this.state.labelWidth}
+                >
+                  {users.map((e, i) => {
+                    return (
+                      <MenuItem key={i} value={e.shortName.stringValue}>
+                        {e.fullName.stringValue}
+                      </MenuItem>
+                    );
+                  })}
                 </Select>
               </FormControl>
             </div>
