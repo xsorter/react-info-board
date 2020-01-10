@@ -6,12 +6,12 @@ const notyContainer = (WrappedComponent) => {
   return class extends React.Component {
     constructor(props) {
       super(props);
+
       this.state = {
         type: 'info',
         show: false,
         message: '',
       };
-
     }
 
     messageHandler = message => {
@@ -28,8 +28,10 @@ const notyContainer = (WrappedComponent) => {
 
     render() {
       const noty = this.state;
+      const isLoaded = true; //TODO: remove after debugging;
+
       return (
-        <div>
+        <React.Fragment>
           <CSSTransition unmountOnExit in={noty.show} timeout={800} classNames="noty-transitions">
             <div className={`noty noty__${noty.type}`}>
               <div className="noty__message">{noty.message}</div>
@@ -38,10 +40,11 @@ const notyContainer = (WrappedComponent) => {
               </div>
             </div>
           </CSSTransition >
-          <WrappedComponent
+
+          {isLoaded ? <WrappedComponent {...this.props}
             onMessageFired={message => this.messageHandler(message)}
-          ></WrappedComponent>
-        </div>
+          ></WrappedComponent> : ''}
+        </React.Fragment>
       );
     }
   };

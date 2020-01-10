@@ -36,7 +36,7 @@ const deleteData = async (documentId) => {
       'Content-Type': 'application/json',
     },
   });
-  return response.data;
+  return response.status;
 };
 
 export default { getData, setData, deleteData, getSingleItem, getUsers };
