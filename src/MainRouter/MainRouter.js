@@ -4,7 +4,6 @@ import Header from '../components/includes/Header/Header';
 import Notepad from '../components/includes/Notepad/Notepad';
 import HomePage from '../components/wrappers/HomePage/HomePage';
 import ArchivePage from '../components/wrappers/ArchivePage/ArchivePage';
-import RouterTest from '../components/wrappers/RouterTest/RouterTest';
 import MainFormPage from '../components/wrappers/MainFormPage/MainFormPage';
 import Settings from '../components/includes/Settings/Settings';
 import { EventNote } from '@material-ui/icons';
@@ -17,15 +16,6 @@ export default class MainRouter extends React.Component {
         <Header />
         <div>
           <Switch>
-            <Route path="/code-snippets">
-              <RouterTest data="to code-snippets" />
-            </Route>
-            <Route path="/general-info">
-              <RouterTest data="to general-info" />
-            </Route>
-            <Route path="/warnings">
-              <RouterTest data="to warnings" />
-            </Route>
             <Route path="/add-new">
               <MainFormPage />
             </Route>
