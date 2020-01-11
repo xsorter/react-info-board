@@ -30,10 +30,7 @@ const useStyles = makeStyles(theme => ({
 
 
 const InfoListItem = props => {
-  console.log(props)
   const classes = useStyles();
-
-  console.log(classes);
 
   return (
     <Grid item xs={12}>

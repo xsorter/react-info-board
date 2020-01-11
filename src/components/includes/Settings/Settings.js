@@ -6,6 +6,7 @@ import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
+import notyContainer from '../../hoc/Noty';
 import Api from '../../../Api';
 
 class Settings extends React.Component {
@@ -29,9 +30,7 @@ class Settings extends React.Component {
         return null;
       });
 
-      this.setState({
-        users: items,
-      });
+      this.setState({users: items});
     });
 
     this.setState({
@@ -43,10 +42,27 @@ class Settings extends React.Component {
     this.setState({ responsibleEmployee: event.target.value });
   };
 
+  responsibleSubmitHandler = () => {
+    Api.setUser(this.state.responsibleEmployee)
+      .then(resp => {
+        if(resp === 200){
+          const notyMessage = {
+            type: 'success',
+            show: true,
+            message: 'Responsible user changed',
+          };
+          this.props.onMessageFired(notyMessage);
+        }
+      })
+  };
+
+  componentWillUnmount(){
+    //TODO: cancel subscribtion
+  }
+
   //TODO: save chosen user id to current user table
   render() {
     const users = this.state.users;
-    console.log('SETTINGS usr', users);
 
     return (
       <div className="settings">
@@ -77,7 +93,15 @@ class Settings extends React.Component {
               </div>
 
               <div className="settings__responsible-button">
-                  <Button disabled={!this.state.responsibleEmployee} size="large" type="submit" variant="contained" color="primary" fullWidth>
+                  <Button
+                    disabled={!this.state.responsibleEmployee}
+                    size="large"
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                    onClick={this.responsibleSubmitHandler}
+                  >
                       Save
                   </Button>
               </div>
@@ -89,4 +113,4 @@ class Settings extends React.Component {
   }
 }
 
-export default Settings;
+export default notyContainer(Settings);

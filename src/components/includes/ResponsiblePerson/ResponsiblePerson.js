@@ -25,7 +25,9 @@ const slackDomain = "blackrockmarketing.slack.com/team";
 class ResponsiblePerson extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      isLoaded: false
+    };
   }
 
   componentDidMount() {
@@ -37,7 +39,10 @@ class ResponsiblePerson extends React.Component {
       Api.getUsers().then(allUsers => {
         allUsers.documents.map(user => {
           if(user.fields.shortName.stringValue === current){
-            this.setState(user.fields)
+            this.setState({
+              ...user.fields,
+              isLoaded: true
+            });
           }
           return null;
         });
@@ -51,23 +56,30 @@ class ResponsiblePerson extends React.Component {
     const slackId = this.state.slackId ? this.state.slackId.stringValue : 'U9M190S4X';
 
     return (
-      <Paper className={'ResponsiblePerson ' + this.props.classes.root}>
-        <Avatar alt="Profile" className={this.props.classes.avatar} src={`/images/${name}.jpg`} />
-        <Typography variant="h6">{fullName}</Typography>
-        <Typography color="textSecondary" variant="caption" display="block" gutterBottom>
-          Current week retro master
-        </Typography>
+      <React.Fragment>
+        {this.state.isLoaded ?
+          <Paper className={'ResponsiblePerson ' + this.props.classes.root}>
+            <Avatar alt="Profile" className={this.props.classes.avatar} src={`/images/${name}.jpg`} />
+            <Typography variant="h6">{fullName}</Typography>
+            <Typography color="textSecondary" variant="caption" display="block" gutterBottom>
+              Current week retro master
+            </Typography>
+            <div>
+              <Typography variant="overline" display="inline" gutterBottom>
+                User ID:&nbsp;
+              </Typography>
+              <Typography variant="subtitle2" display="inline" gutterBottom>
+                <a href={`https://${slackDomain}/${slackId}`} rel="noopener noreferrer" target="_blank">
+                  {name}
+                </a>
+              </Typography>
+            </div>
+        </Paper>
+          :
         <div>
-          <Typography variant="overline" display="inline" gutterBottom>
-            User ID:&nbsp;
-          </Typography>
-          <Typography variant="subtitle2" display="inline" gutterBottom>
-            <a href={`https://${slackDomain}/${slackId}`} rel="noopener noreferrer" target="_blank">
-              {name}
-            </a>
-          </Typography>
-        </div>
-      </Paper>
+          LOADING...
+        </div>}
+      </React.Fragment>
     );
   }
 }

@@ -2,6 +2,8 @@ import React from 'react';
 import './Noty.sass';
 import { CSSTransition } from 'react-transition-group';
 
+const TIMEOUT = 3000;
+
 const notyContainer = (WrappedComponent) => {
   return class extends React.Component {
     constructor(props) {
@@ -19,7 +21,7 @@ const notyContainer = (WrappedComponent) => {
       this.setState(newMessage);
       setTimeout(() => {
         this.setState({show: false})
-      }, 5000)
+      }, TIMEOUT)
     };
 
     closeHandler = () =>{
