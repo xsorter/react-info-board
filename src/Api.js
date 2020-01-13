@@ -6,8 +6,7 @@ axios.defaults.baseURL =
 const COLLECTION = 'retrospective';
 
 //TODO: cancel subscribtions
-const CancelToken = axios.CancelToken;
-const source = CancelToken.source();
+const cancelToken = axios.CancelToken.source();
 
 const setData = async data => {
   const response = await axios({
@@ -35,6 +34,7 @@ const getUsers = async (isResponsible) => {
 const setUser = async (userId) => {
   const response = await axios({
     method: 'PATCH',
+    cancelToken: cancelToken.token,
     url: `/responsibleUser/user`,
     data: {
       fields: {
@@ -42,6 +42,7 @@ const setUser = async (userId) => {
       }
     }
   });
+  console.log('RES', response);
   return response.status
 }
 

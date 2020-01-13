@@ -30,7 +30,6 @@ const notyContainer = (WrappedComponent) => {
 
     render() {
       const noty = this.state;
-      const isLoaded = true; //TODO: remove after debugging;
 
       return (
         <React.Fragment>
@@ -43,9 +42,9 @@ const notyContainer = (WrappedComponent) => {
             </div>
           </CSSTransition >
 
-          {isLoaded ? <WrappedComponent {...this.props}
+          <WrappedComponent {...this.props}
             onMessageFired={message => this.messageHandler(message)}
-          ></WrappedComponent> : ''}
+          ></WrappedComponent>
         </React.Fragment>
       );
     }

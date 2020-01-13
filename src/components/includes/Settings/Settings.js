@@ -45,6 +45,7 @@ class Settings extends React.Component {
   responsibleSubmitHandler = () => {
     Api.setUser(this.state.responsibleEmployee)
       .then(resp => {
+        console.log('RES', resp);
         if(resp === 200){
           const notyMessage = {
             type: 'success',
