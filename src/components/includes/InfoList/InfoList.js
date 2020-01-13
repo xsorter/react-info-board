@@ -2,11 +2,16 @@ import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
 import InfoListItem from './InfoListItem/InfoListItem';
 import Typography from '@material-ui/core/Typography';
+import Api from '../../../Api';
+import notyContainer from '../../hoc/Noty';
 
 class InfoList extends Component {
-  state = {
-    itemList: [],
-  };
+  constructor(props){
+    super(props)
+    this.state = {
+      itemList: [],
+    };
+  }
 
   componentDidMount() {
     this.setState({ itemList: this.props.dataArr });
@@ -26,15 +31,30 @@ class InfoList extends Component {
     newItemList[itemIndex].deletionSubmit.booleanValue = true;
     this.setState({ itemList: newItemList });
   };
+
   removeItemHandler = (itemIndex, action) => {
     const newItemList = [...this.state.itemList];
+    const itemId = newItemList[itemIndex].id.stringValue;
+
     if (action === 'Delete') {
       newItemList.splice(itemIndex, 1);
+      Api.deleteData(itemId)
+      .then(resp => {
+          if (resp === 200){
+            const notyMessage = {
+              type: 'success',
+              show: true,
+              message: 'Item Deleted',
+            };
+            this.props.onMessageFired(notyMessage);
+          }
+      })
     } else {
       newItemList[itemIndex].deletionSubmit.booleanValue = false;
     }
     this.setState({ itemList: newItemList });
   };
+
   render() {
     return (
       <div className="InfoList">
@@ -64,4 +84,5 @@ class InfoList extends Component {
   }
 }
 
-export default InfoList;
+
+export default notyContainer(InfoList);

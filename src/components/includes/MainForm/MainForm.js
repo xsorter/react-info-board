@@ -103,7 +103,9 @@ class MainForm extends Component {
           timestampClient: { stringValue: date},
         },
       },
-    }).then(resp => {
+    })
+    .then(resp => {
+      console.log(resp)
       if(resp.name) {
         target.reset();
         const notyMessage = {
@@ -113,9 +115,12 @@ class MainForm extends Component {
         };
         this.props.onMessageFired(notyMessage);
       }
-      console.log('RESPONSE', resp);
     });
   };
+
+  componentWillUnmount(){
+    //TODO: clear subscribtion
+  }
 
   render() {
     const users = this.state.users;

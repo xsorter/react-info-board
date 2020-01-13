@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import CloseIcon from '@material-ui/icons/Close';
 import SubmitPopup from '../SubmitPopup/SubmitPopup';
+import notyContainer from '../../../hoc/Noty';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -26,8 +27,11 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+
+
 const InfoListItem = props => {
   const classes = useStyles();
+
   return (
     <Grid item xs={12}>
       <Paper className={classes.root}>
@@ -54,4 +58,6 @@ const InfoListItem = props => {
   );
 };
 
-export default InfoListItem;
+export default notyContainer(InfoListItem);
+
+

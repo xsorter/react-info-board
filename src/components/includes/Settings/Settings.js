@@ -5,6 +5,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
+import Button from '@material-ui/core/Button';
+import notyContainer from '../../hoc/Noty';
 import Api from '../../../Api';
 
 class Settings extends React.Component {
@@ -28,9 +30,7 @@ class Settings extends React.Component {
         return null;
       });
 
-      this.setState({
-        users: items,
-      });
+      this.setState({users: items});
     });
 
     this.setState({
@@ -42,10 +42,27 @@ class Settings extends React.Component {
     this.setState({ responsibleEmployee: event.target.value });
   };
 
+  responsibleSubmitHandler = () => {
+    Api.setUser(this.state.responsibleEmployee)
+      .then(resp => {
+        if(resp === 200){
+          const notyMessage = {
+            type: 'success',
+            show: true,
+            message: 'Responsible user changed',
+          };
+          this.props.onMessageFired(notyMessage);
+        }
+      })
+  };
+
+  componentWillUnmount(){
+    //TODO: cancel subscribtion
+  }
+
   //TODO: save chosen user id to current user table
   render() {
     const users = this.state.users;
-    console.log('SETTINGS usr', users);
 
     return (
       <div className="settings">
@@ -53,25 +70,41 @@ class Settings extends React.Component {
           <h2 className="settings__title">Settings</h2>
           <Paper className="settings__box">
             <div className="settings__responsible">
-              <FormControl variant="outlined" fullWidth>
-                <InputLabel ref={this.inputLabel} id="outlined-label">
-                  Responsible Employee
-                </InputLabel>
-                <Select
-                  onChange={this.handleSelectChange}
-                  value={this.state.responsibleEmployee}
-                  labelId="outlined-label"
-                  labelWidth={this.state.labelWidth}
-                >
-                  {users.map((e, i) => {
-                    return (
-                      <MenuItem key={i} value={e.shortName.stringValue}>
-                        {e.fullName.stringValue}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              </FormControl>
+              <div className="settings__responsible-box">
+                <FormControl variant="outlined" fullWidth>
+                  <InputLabel ref={this.inputLabel} id="outlined-label">
+                    Responsible Employee
+                  </InputLabel>
+                  <Select
+                    onChange={this.handleSelectChange}
+                    value={this.state.responsibleEmployee}
+                    labelId="outlined-label"
+                    labelWidth={this.state.labelWidth}
+                  >
+                    {users.map((e, i) => {
+                      return (
+                        <MenuItem key={i} value={e.shortName.stringValue}>
+                          {e.fullName.stringValue}
+                        </MenuItem>
+                      );
+                    })}
+                  </Select>
+                </FormControl>
+              </div>
+
+              <div className="settings__responsible-button">
+                  <Button
+                    disabled={!this.state.responsibleEmployee}
+                    size="large"
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                    onClick={this.responsibleSubmitHandler}
+                  >
+                      Save
+                  </Button>
+              </div>
             </div>
           </Paper>
         </div>
@@ -80,4 +113,4 @@ class Settings extends React.Component {
   }
 }
 
-export default Settings;
+export default notyContainer(Settings);

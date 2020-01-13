@@ -1,6 +1,8 @@
 import axios from 'axios';
 
 const COLLECTION = 'retrospective';
+//TODO: cancel subscribtions
+
 
 const setData = async data => {
   const response = await axios({
@@ -8,7 +10,8 @@ const setData = async data => {
     url: data.edit ? `/${COLLECTION}/${data.id}/` : `/${COLLECTION}?documentId=${data.id}`,
     data: data.requestBody,
   });
-  return response.data;
+
+  return response.data
 };
 
 const getData = async () => {
@@ -24,6 +27,19 @@ const getUsers = async (isResponsible) => {
   return response.data;
 };
 
+const setUser = async (userId) => {
+  const response = await axios({
+    method: 'PATCH',
+    url: `/responsibleUser/user`,
+    data: {
+      fields: {
+        id: {stringValue: userId}
+      }
+    }
+  });
+  return response.status
+}
+
 const getSingleItem = async (documentId) => {
   const response = await axios.get(`/${COLLECTION}/${documentId}`);
   return response.data;
@@ -36,7 +52,7 @@ const deleteData = async (documentId) => {
       'Content-Type': 'application/json',
     },
   });
-  return response.data;
+  return response.status;
 };
 
-export default { getData, setData, deleteData, getSingleItem, getUsers };
+export default { getData, setData, deleteData, getSingleItem, getUsers, setUser };
