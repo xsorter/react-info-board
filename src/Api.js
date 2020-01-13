@@ -1,8 +1,13 @@
 import axios from 'axios';
 
-const COLLECTION = 'retrospective';
-//TODO: cancel subscribtions
+axios.defaults.baseURL =
+  'https://firestore.googleapis.com/v1/projects/infoboard-react/databases/(default)/documents';
 
+const COLLECTION = 'retrospective';
+
+//TODO: cancel subscribtions
+const CancelToken = axios.CancelToken;
+const source = CancelToken.source();
 
 const setData = async data => {
   const response = await axios({

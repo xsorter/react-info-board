@@ -11,16 +11,6 @@ import { Link } from 'react-router-dom';
 
 export default class MainRouter extends React.Component {
 
-  /*constructor(props){
-    super(props)
-
-    this.abort = new AbortController();
-  }
-
-  componentWillUnmount(){
-    this.abort.abort();
-  }*/
-
   render() {
     return (
       <Router>
