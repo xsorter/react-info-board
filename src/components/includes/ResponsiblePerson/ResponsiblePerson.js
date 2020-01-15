@@ -5,6 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
+import Loading from '../../etc/Loading/Loading';
 
 const useStyles = theme => ({
   root: {
@@ -74,11 +75,8 @@ class ResponsiblePerson extends React.Component {
                 </a>
               </Typography>
             </div>
-        </Paper>
-          :
-        <div>
-          LOADING...
-        </div>}
+          </Paper>
+        : <Loading /> }
       </React.Fragment>
     );
   }
