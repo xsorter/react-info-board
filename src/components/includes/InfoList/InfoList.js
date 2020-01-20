@@ -4,11 +4,14 @@ import InfoListItem from './InfoListItem/InfoListItem';
 import Typography from '@material-ui/core/Typography';
 import Api from '../../../Api';
 import notyContainer from '../../hoc/Noty';
+import Loading from '../../etc/Loading/Loading';
+
 
 class InfoList extends Component {
   constructor(props){
     super(props)
     this.state = {
+      isLoaded: false,
       itemList: [],
     };
   }
@@ -20,10 +23,17 @@ class InfoList extends Component {
   shouldComponentUpdate(nextProps) {
     if (this.props.dataArr !== nextProps.dataArr) {
       this.setState({
-        itemList: nextProps.dataArr,
+        isLoaded: true,
+        itemList: nextProps.dataArr
       });
     }
     return true;
+  }
+
+  componentWillUnmount() {
+    this.setState({
+      isLoaded: false
+    })
   }
 
   submitHandler = itemIndex => {
@@ -58,6 +68,8 @@ class InfoList extends Component {
   render() {
     return (
       <div className="InfoList">
+
+        {this.state.isLoaded ?
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Typography color="primary" variant="h5" component="h5">
@@ -78,7 +90,8 @@ class InfoList extends Component {
               />
             );
           })}
-        </Grid>
+        </Grid> : <Loading />}
+
       </div>
     );
   }
