@@ -14,8 +14,8 @@ const useStyles = makeStyles(theme => ({
   },
   close: {
     position: 'absolute',
-    top: '5px',
-    right: '5px',
+    top: '15px',
+    right: '15px',
     fontSize: '1.2678rem',
     cursor: 'pointer',
     transition: 'transform ease-out 0.2s',
@@ -46,10 +46,11 @@ const InfoListItem = props => {
         )}
 
         <h6 className="item__title">
-          <span className="item__date">{props.date}&nbsp;</span>
           {props.title}
         </h6>
+        <span className="item__date">{props.date}&nbsp;</span>
         <div className="item__content">{props.content}</div>
+
         <div className="item__info">
           <div className="item__info-labels">
             <span className={`item__label item__label-${props.status}`}>{props.status}</span>
