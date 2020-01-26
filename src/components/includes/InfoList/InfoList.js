@@ -62,6 +62,7 @@ class InfoList extends Component {
     } else {
       newItemList[itemIndex].deletionSubmit.booleanValue = false;
     }
+
     this.setState({ itemList: newItemList });
   };
 
@@ -86,6 +87,7 @@ class InfoList extends Component {
                 author={listItem.author.stringValue}
                 content={listItem.content.stringValue}
                 status={listItem.status.stringValue}
+                date={listItem.date.stringValue}
                 key={listItem.id.stringValue}
               />
             );

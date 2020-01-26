@@ -3,7 +3,6 @@ import './SubmitPopup.sass';
 import Button from '@material-ui/core/Button';
 
 const SubmitPopup = props => {
-  console.log(props);
   return (
     <div className="submit-popup">
       <p>{props.message}</p>

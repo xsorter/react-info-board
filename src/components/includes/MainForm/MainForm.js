@@ -87,8 +87,9 @@ class MainForm extends Component {
     e.preventDefault();
     const uuid = helpers.idGenerator();
     const date = new Date();
+    const shortDate = date.toJSON().slice(0, 10);
     let target = e.currentTarget;
-
+    console.log('date', shortDate);
     Api.setData({
       edit: false,
       id: uuid,
@@ -100,7 +101,8 @@ class MainForm extends Component {
           deletionSubmit: { booleanValue: false },
           author: { stringValue: this.state.responsibleEmployee },
           id: { stringValue: uuid },
-          timestampClient: { stringValue: date},
+          timestampClient: { stringValue: date },
+          date: { stringValue: shortDate }
         },
       },
     })
