@@ -15,16 +15,23 @@ const useStyles = theme => ({
 class Archive extends React.Component {
   constructor(props) {
     super(props);
-
     this.props = props;
+    this.state = {}
+  }
+
+  componentDidMount(){
+    this.setState({
+      ...this.props
+    })
   }
 
   render() {
+    console.log('STATE',this.state);
     return (
       <div className="Archive">
         <Paper className="Archive__paper">
           <Typography variant="h6" gutterBottom>
-            10.12.19
+            xx
           </Typography>
           <div className="Archive__item">
             <Typography component="div" color="inherit" variant="body2">

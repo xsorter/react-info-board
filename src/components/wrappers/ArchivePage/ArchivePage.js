@@ -15,7 +15,57 @@ const useStyles = theme => ({
 class ArchivePage extends React.Component {
   constructor(props) {
     super(props);
+
+    this.dummyData = [
+      {
+        date: "10.12.2019",
+        itemsData: [
+          {
+            id: '#001',
+            author: 'nelin',
+            text: 'Lorem ipsum dolor sit amet',
+            status: 'opened'
+          },
+          {
+            id: '#002',
+            author: 'mekhed',
+            text: 'consectetur adipisicing elit',
+            status: 'closed'
+          },
+          {
+            id: '#003',
+            author: 'golovnia',
+            text: 'Quos blanditiis tenetur unde suscipit',
+            status: 'opened'
+          }
+        ]
+      },
+      {
+        date: "11.12.2019",
+        itemsData: [
+          {
+            id: '#001',
+            author: 'nelin',
+            text: 'Lorem ipsum dolor sit amet',
+            status: 'opened'
+          },
+          {
+            id: '#002',
+            author: 'mekhed',
+            text: 'consectetur adipisicing elit',
+            status: 'closed'
+          },
+          {
+            id: '#003',
+            author: 'golovnia',
+            text: 'Quos blanditiis tenetur unde suscipit',
+            status: 'opened'
+          }
+        ]
+      }
+    ]
   }
+
   render() {
     return (
       <div className="ArchivePage">
@@ -26,9 +76,9 @@ class ArchivePage extends React.Component {
                 <Typography color="primary" variant="h5" component="h5" gutterBottom>
                   Archive
                 </Typography>
-                <Archive />
-                <Archive />
-                <Archive />
+                {this.dummyData.map((e, i) => {
+                  return (<Archive key={i} items = {e} />)
+                })}
               </Grid>
             </Grid>
           </div>
@@ -39,6 +89,7 @@ class ArchivePage extends React.Component {
       </div>
     );
   }
+
 }
 
 export default withStyles(useStyles)(ArchivePage);
