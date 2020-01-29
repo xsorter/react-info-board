@@ -13,65 +13,32 @@ const useStyles = theme => ({
 });
 
 class Archive extends React.Component {
-  constructor(props) {
-    super(props);
-    this.props = props;
-    this.state = {}
-  }
-
-  componentDidMount(){
-    this.setState({
-      ...this.props
-    })
-  }
 
   render() {
-    console.log('STATE',this.state);
+    const date = this.props.items.date;
+    const items = this.props.items.itemsData;
+
     return (
       <div className="Archive">
         <Paper className="Archive__paper">
           <Typography variant="h6" gutterBottom>
-            xx
+            {date}
           </Typography>
-          <div className="Archive__item">
-            <Typography component="div" color="inherit" variant="body2">
-              <Typography variant="subtitle1" display="inline" color="primary">
-                #001&nbsp;
-              </Typography>
-              <Typography variant="overline" display="inline" color="textSecondary">
-                Mekhed Roman:&nbsp;
-              </Typography>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde
-              suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam
-              dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam.
-            </Typography>
-          </div>
-          <div className="Archive__item Archive__item_incomplete">
-            <Typography component="div" variant="body2">
-              <Typography variant="subtitle1" display="inline" color="primary">
-                #002&nbsp;
-              </Typography>
-              <Typography variant="overline" display="inline" color="textSecondary">
-                Mekhed Roman:&nbsp;
-              </Typography>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde
-              suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam
-              dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam.
-            </Typography>
-          </div>
-          <div className="Archive__item">
-            <Typography component="div" variant="body2">
-              <Typography variant="subtitle1" display="inline" color="primary">
-                #003&nbsp;
-              </Typography>
-              <Typography variant="overline" display="inline" color="textSecondary">
-                Mekhed Roman:&nbsp;
-              </Typography>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde
-              suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam
-              dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam.
-            </Typography>
-          </div>
+          {items.map((e, i) => {
+            return (
+              <div key={i} className={e.status === 'opened' ? 'Archive__item' : 'Archive__item Archive__item_incomplete'}>
+                <Typography component="div" color="inherit" variant="body2">
+                  <Typography variant="subtitle1" display="inline" color="primary">
+                    {e.id}&nbsp;
+                  </Typography>
+                  <Typography variant="overline" display="inline" color="textSecondary">
+                    {e.author}:&nbsp;
+                  </Typography>
+                  {e.text}
+                </Typography>
+              </div>
+            )
+          })}
         </Paper>
       </div>
     );

@@ -22,19 +22,19 @@ class ArchivePage extends React.Component {
         itemsData: [
           {
             id: '#001',
-            author: 'nelin',
+            author: 'Alex Nelin',
             text: 'Lorem ipsum dolor sit amet',
             status: 'opened'
           },
           {
             id: '#002',
-            author: 'mekhed',
+            author: 'Roman Mekhed',
             text: 'consectetur adipisicing elit',
             status: 'closed'
           },
           {
             id: '#003',
-            author: 'golovnia',
+            author: 'Galina Golovnia',
             text: 'Quos blanditiis tenetur unde suscipit',
             status: 'opened'
           }
@@ -44,22 +44,22 @@ class ArchivePage extends React.Component {
         date: "11.12.2019",
         itemsData: [
           {
-            id: '#001',
-            author: 'nelin',
+            id: '#0011',
+            author: 'Alex Nelin',
             text: 'Lorem ipsum dolor sit amet',
             status: 'opened'
           },
           {
-            id: '#002',
-            author: 'mekhed',
+            id: '#0022',
+            author: 'Roman Mekhed',
             text: 'consectetur adipisicing elit',
-            status: 'closed'
+            status: 'opened'
           },
           {
-            id: '#003',
-            author: 'golovnia',
+            id: '#0033',
+            author: 'Galina Golovnia',
             text: 'Quos blanditiis tenetur unde suscipit',
-            status: 'opened'
+            status: 'closed'
           }
         ]
       }
