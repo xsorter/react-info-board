@@ -2,9 +2,9 @@ import React from 'react';
 import Archive from '../../includes/Archive/Archive';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import { EventNote } from '@material-ui/icons';
-import { Link } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
+import Api from '../../../Api';
+import Loading from '../../etc/Loading/Loading';
 
 const useStyles = theme => ({
   root: {
@@ -13,83 +13,76 @@ const useStyles = theme => ({
 });
 
 class ArchivePage extends React.Component {
-  constructor(props) {
-    super(props);
+  state = { isLoaded: false };
 
-    this.dummyData = [
-      {
-        date: "10.12.2019",
-        itemsData: [
-          {
-            id: '#001',
-            author: 'Alex Nelin',
-            text: 'Lorem ipsum dolor sit amet',
-            status: 'opened'
-          },
-          {
-            id: '#002',
-            author: 'Roman Mekhed',
-            text: 'consectetur adipisicing elit',
-            status: 'closed'
-          },
-          {
-            id: '#003',
-            author: 'Galina Golovnia',
-            text: 'Quos blanditiis tenetur unde suscipit',
-            status: 'opened'
+  componentDidMount(){
+    Api.getData()
+      .then(data => {
+        const newData = [];
+        const sortedArr = [];
+
+        data.documents.map( item => {
+          newData.push({
+            date: item.fields.date.stringValue,
+            itemsData: [{
+              id: item.fields.id.stringValue,
+              author: item.fields.author.stringValue,
+              text: item.fields.content.stringValue,
+              status: item.fields.status.stringValue
+            }]
+          })
+          return true
+        })
+
+        newData.map(e => {
+          let current = sortedArr.filter(v => v.date === e.date);
+          if(current.length){
+            let currentIndex = sortedArr.indexOf(current[0]);
+            sortedArr[currentIndex].itemsData = sortedArr[currentIndex].itemsData.concat(e.itemsData);
+          } else {
+            sortedArr.push(e)
           }
-        ]
-      },
-      {
-        date: "11.12.2019",
-        itemsData: [
-          {
-            id: '#0011',
-            author: 'Alex Nelin',
-            text: 'Lorem ipsum dolor sit amet',
-            status: 'opened'
-          },
-          {
-            id: '#0022',
-            author: 'Roman Mekhed',
-            text: 'consectetur adipisicing elit',
-            status: 'opened'
-          },
-          {
-            id: '#0033',
-            author: 'Galina Golovnia',
-            text: 'Quos blanditiis tenetur unde suscipit',
-            status: 'closed'
-          }
-        ]
-      }
-    ]
+          return true
+        })
+
+        this.setState({
+          isLoaded: true,
+          data: sortedArr
+        })
+      })
+  }
+
+  componentWillUnmount(){
+    this.setState({ isLoaded: false })
   }
 
   render() {
+    const data = this.state.data;
     return (
       <div className="ArchivePage">
         <div className="cBox">
           <div className={this.props.classes.root}>
             <Grid container spacing={3}>
-              <Grid item xs={12}>
+                <Grid item xs={12}>
                 <Typography color="primary" variant="h5" component="h5" gutterBottom>
                   Archive
                 </Typography>
-                {this.dummyData.map((e, i) => {
-                  return (<Archive key={i} items = {e} />)
-                })}
+
+                {this.state.isLoaded ? (
+                  <React.Fragment>
+                    {data.map((e, i) => {
+                      return (<Archive key={i} items = {e} />)
+                    })}
+                  </React.Fragment>
+                 ) : <Loading />}
+
               </Grid>
             </Grid>
           </div>
         </div>
-        <Link title="Notepad" className="button__notepad" to="/notepad">
-          <EventNote>Notepad</EventNote>
-        </Link>
       </div>
     );
   }
-
 }
 
 export default withStyles(useStyles)(ArchivePage);

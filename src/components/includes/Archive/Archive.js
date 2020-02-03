@@ -29,7 +29,7 @@ class Archive extends React.Component {
               <div key={i} className={e.status === 'opened' ? 'Archive__item' : 'Archive__item Archive__item_incomplete'}>
                 <Typography component="div" color="inherit" variant="body2">
                   <Typography variant="subtitle1" display="inline" color="primary">
-                    {e.id}&nbsp;
+                    #{e.id.substring(1, 4) + '...'}&nbsp;
                   </Typography>
                   <Typography variant="overline" display="inline" color="textSecondary">
                     {e.author}:&nbsp;
