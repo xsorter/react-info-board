@@ -72,12 +72,12 @@ class MainForm extends Component {
   }
 
   handleContentChange = event => {
-    this.setState({ formContent: event.target.value })
-  }
+    this.setState({ formContent: event.target.value });
+  };
 
   handleTitleChange = event => {
-    this.setState({ formTitle: event.target.value })
-  }
+    this.setState({ formTitle: event.target.value });
+  };
 
   handleSelectChange = event => {
     this.setState({ responsibleEmployee: event.target.value });
@@ -102,13 +102,12 @@ class MainForm extends Component {
           author: { stringValue: this.state.responsibleEmployee },
           id: { stringValue: uuid },
           timestampClient: { stringValue: date },
-          date: { stringValue: shortDate }
+          date: { stringValue: shortDate },
         },
       },
-    })
-    .then(resp => {
-      console.log(resp)
-      if(resp.name) {
+    }).then(resp => {
+      console.log(resp);
+      if (resp.name) {
         target.reset();
         const notyMessage = {
           type: 'success',
@@ -120,7 +119,7 @@ class MainForm extends Component {
     });
   };
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     //TODO: clear subscribtion
   }
 

@@ -27,8 +27,6 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-
-
 const InfoListItem = props => {
   const classes = useStyles();
 
@@ -45,9 +43,7 @@ const InfoListItem = props => {
           ''
         )}
 
-        <h6 className="item__title">
-          {props.title}
-        </h6>
+        <h6 className="item__title">{props.title}</h6>
         <span className="item__date">{props.date}&nbsp;</span>
         <div className="item__content">{props.content}</div>
 
@@ -63,5 +59,3 @@ const InfoListItem = props => {
 };
 
 export default notyContainer(InfoListItem);
-
-
