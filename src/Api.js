@@ -15,7 +15,7 @@ const setData = async data => {
     data: data.requestBody,
   });
 
-  return response.data
+  return response.data;
 };
 
 const getData = async () => {
@@ -23,7 +23,7 @@ const getData = async () => {
   return response.data;
 };
 
-const getUsers = async (isResponsible) => {
+const getUsers = async isResponsible => {
   const response = await axios({
     method: 'GET',
     url: isResponsible ? `/responsibleUser/` : `/users/`,
@@ -31,27 +31,27 @@ const getUsers = async (isResponsible) => {
   return response.data;
 };
 
-const setUser = async (userId) => {
+const setUser = async userId => {
   const response = await axios({
     method: 'PATCH',
     cancelToken: cancelToken.token,
     url: `/responsibleUser/user`,
     data: {
       fields: {
-        id: {stringValue: userId}
-      }
-    }
+        id: { stringValue: userId },
+      },
+    },
   });
   console.log('RES', response);
-  return response.status
-}
+  return response.status;
+};
 
-const getSingleItem = async (documentId) => {
+const getSingleItem = async documentId => {
   const response = await axios.get(`/${COLLECTION}/${documentId}`);
   return response.data;
 };
 
-const deleteData = async (documentId) => {
+const deleteData = async documentId => {
   const response = await axios.delete(`/${COLLECTION}/${documentId}`, {
     method: 'DELETE',
     headers: {

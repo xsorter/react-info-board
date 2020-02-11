@@ -30,7 +30,7 @@ class Settings extends React.Component {
         return null;
       });
 
-      this.setState({users: items});
+      this.setState({ users: items });
     });
 
     this.setState({
@@ -43,21 +43,20 @@ class Settings extends React.Component {
   };
 
   responsibleSubmitHandler = () => {
-    Api.setUser(this.state.responsibleEmployee)
-      .then(resp => {
-        console.log('RES', resp);
-        if(resp === 200){
-          const notyMessage = {
-            type: 'success',
-            show: true,
-            message: 'Responsible user changed',
-          };
-          this.props.onMessageFired(notyMessage);
-        }
-      })
+    Api.setUser(this.state.responsibleEmployee).then(resp => {
+      console.log('RES', resp);
+      if (resp === 200) {
+        const notyMessage = {
+          type: 'success',
+          show: true,
+          message: 'Responsible user changed',
+        };
+        this.props.onMessageFired(notyMessage);
+      }
+    });
   };
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     //TODO: cancel subscribtion
   }
 
@@ -94,17 +93,17 @@ class Settings extends React.Component {
               </div>
 
               <div className="settings__responsible-button">
-                  <Button
-                    disabled={!this.state.responsibleEmployee}
-                    size="large"
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    fullWidth
-                    onClick={this.responsibleSubmitHandler}
-                  >
-                      Save
-                  </Button>
+                <Button
+                  disabled={!this.state.responsibleEmployee}
+                  size="large"
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  onClick={this.responsibleSubmitHandler}
+                >
+                  Save
+                </Button>
               </div>
             </div>
           </Paper>

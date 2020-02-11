@@ -13,7 +13,6 @@ const useStyles = theme => ({
 });
 
 class Archive extends React.Component {
-
   render() {
     const date = this.props.items.date;
     const items = this.props.items.itemsData;
@@ -26,18 +25,25 @@ class Archive extends React.Component {
           </Typography>
           {items.map((e, i) => {
             return (
-              <div key={i} className={e.status === 'opened' ? 'Archive__item' : 'Archive__item Archive__item_incomplete'}>
+              <div
+                key={i}
+                className={
+                  e.status === 'opened' ? 'Archive__item' : 'Archive__item Archive__item_incomplete'
+                }
+              >
                 <Typography component="div" color="inherit" variant="body2">
-                  <Typography variant="subtitle1" display="inline" color="primary">
-                    <span title={`id: ${e.id}`} className="Archive__item-id">№RE-{e.id.substring(1, 4) + '...'}</span>&nbsp;
-                  </Typography>
-                  <Typography variant="overline" display="inline" color="textSecondary">
-                    {e.author}:&nbsp;
+                  <Typography
+                    title={`id: ${e.id}`}
+                    variant="overline"
+                    display="inline"
+                    color="textSecondary"
+                  >
+                    {e.author} :&nbsp;
                   </Typography>
                   {e.text}
                 </Typography>
               </div>
-            )
+            );
           })}
         </Paper>
       </div>

@@ -6,10 +6,9 @@ import Api from '../../../Api';
 import notyContainer from '../../hoc/Noty';
 import Loading from '../../etc/Loading/Loading';
 
-
 class InfoList extends Component {
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
       isLoaded: false,
       itemList: [],
@@ -24,7 +23,7 @@ class InfoList extends Component {
     if (this.props.dataArr !== nextProps.dataArr) {
       this.setState({
         isLoaded: true,
-        itemList: nextProps.dataArr
+        itemList: nextProps.dataArr,
       });
     }
     return true;
@@ -32,8 +31,8 @@ class InfoList extends Component {
 
   componentWillUnmount() {
     this.setState({
-      isLoaded: false
-    })
+      isLoaded: false,
+    });
   }
 
   submitHandler = itemIndex => {
@@ -48,17 +47,16 @@ class InfoList extends Component {
 
     if (action === 'Delete') {
       newItemList.splice(itemIndex, 1);
-      Api.deleteData(itemId)
-      .then(resp => {
-          if (resp === 200){
-            const notyMessage = {
-              type: 'success',
-              show: true,
-              message: 'Item Deleted',
-            };
-            this.props.onMessageFired(notyMessage);
-          }
-      })
+      Api.deleteData(itemId).then(resp => {
+        if (resp === 200) {
+          const notyMessage = {
+            type: 'success',
+            show: true,
+            message: 'Item Deleted',
+          };
+          this.props.onMessageFired(notyMessage);
+        }
+      });
     } else {
       newItemList[itemIndex].deletionSubmit.booleanValue = false;
     }
@@ -69,35 +67,35 @@ class InfoList extends Component {
   render() {
     return (
       <div className="InfoList">
-
-        {this.state.isLoaded ?
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <Typography color="primary" variant="h5" component="h5">
-              Latest updates
-            </Typography>
+        {this.state.isLoaded ? (
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <Typography color="primary" variant="h5" component="h5">
+                Latest updates
+              </Typography>
+            </Grid>
+            {this.state.itemList.map((listItem, index) => {
+              return (
+                <InfoListItem
+                  click={action => this.removeItemHandler(index, action)}
+                  submit={() => this.submitHandler(index)}
+                  showPopup={this.state.itemList[index].deletionSubmit.booleanValue}
+                  title={listItem.title.stringValue}
+                  author={listItem.author.stringValue}
+                  content={listItem.content.stringValue}
+                  status={listItem.status.stringValue}
+                  date={listItem.date.stringValue}
+                  key={listItem.id.stringValue}
+                />
+              );
+            })}
           </Grid>
-          {this.state.itemList.map((listItem, index) => {
-            return (
-              <InfoListItem
-                click={action => this.removeItemHandler(index, action)}
-                submit={() => this.submitHandler(index)}
-                showPopup={this.state.itemList[index].deletionSubmit.booleanValue}
-                title={listItem.title.stringValue}
-                author={listItem.author.stringValue}
-                content={listItem.content.stringValue}
-                status={listItem.status.stringValue}
-                date={listItem.date.stringValue}
-                key={listItem.id.stringValue}
-              />
-            );
-          })}
-        </Grid> : <Loading />}
-
+        ) : (
+          <Loading />
+        )}
       </div>
     );
   }
 }
-
 
 export default notyContainer(InfoList);
