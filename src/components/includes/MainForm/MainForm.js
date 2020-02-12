@@ -12,6 +12,7 @@ import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import Api from '../../../Api';
 import helpers from '../../../Helpers';
+import { Link } from 'react-router-dom';
 import notyContainer from '../../hoc/Noty';
 
 const useStyles = theme => ({
@@ -60,7 +61,6 @@ class MainForm extends Component {
         items.push(e.fields);
         return null;
       });
-
       this.setState({
         users: items,
       });
@@ -136,10 +136,8 @@ class MainForm extends Component {
           <Grid item xs={12}>
             <Paper className={this.props.classes.root}>
               <Typography variant="caption" display="block" gutterBottom>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum quasi quidem
-                quibusdam.
-                <br />
-                Quos blanditiis cupiditate numquam fugiat deleniti?
+                Here you add a new issue for current retrospective meeting.<br />
+                Later you may find it at <Link to="/archive">Archive</Link> section for a corresponding date.
               </Typography>
               <form onSubmit={this.submitHandler} noValidate autoComplete="off">
                 <div className={this.props.classes.inputRow}>
