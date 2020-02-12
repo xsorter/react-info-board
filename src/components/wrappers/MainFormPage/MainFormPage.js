@@ -25,7 +25,7 @@ const HomePage = props => {
               <ResponsiblePerson />
             </Grid>
             <Grid item xs={9}>
-              <MainForm {...props}/>
+              <MainForm {...props} />
             </Grid>
           </Grid>
         </div>

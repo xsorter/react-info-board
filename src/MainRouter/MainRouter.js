@@ -10,7 +10,6 @@ import { EventNote } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 
 export default class MainRouter extends React.Component {
-
   render() {
     return (
       <Router>
