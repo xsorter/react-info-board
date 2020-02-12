@@ -33,7 +33,7 @@ const HeaderMenu = props => {
       </Button>
       <Menu
         id="header-menu"
-        anchorEl={anchorEl} 
+        anchorEl={anchorEl}
         getContentAnchorEl={null}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
@@ -41,7 +41,7 @@ const HeaderMenu = props => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
         className="Header-menuList"
-      > 
+      >
         <MenuItem exact={true} onClick={handleClose} to="/" component={NavLink}>
           <ListItemIcon>
             <Home fontSize="small" />
@@ -53,6 +53,12 @@ const HeaderMenu = props => {
             <PostAdd fontSize="small" />
           </ListItemIcon>
           <ListItemText primary="Add new issue" />
+        </MenuItem>
+        <MenuItem onClick={handleClose} to="/edit" component={NavLink}>
+          <ListItemIcon>
+            <PostAdd fontSize="small" />
+          </ListItemIcon>
+          <ListItemText primary="Edit (DEBUG)" />
         </MenuItem>
         <MenuItem onClick={handleClose} to="/archive" component={NavLink}>
           <ListItemIcon>
