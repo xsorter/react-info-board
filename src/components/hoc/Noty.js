@@ -8,7 +8,6 @@ const notyContainer = (WrappedComponent) => {
   return class extends React.Component {
     constructor(props) {
       super(props);
-
       this.state = {
         type: 'info',
         show: false,

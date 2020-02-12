@@ -15,6 +15,7 @@ import helpers from '../../../Helpers';
 import { Link } from 'react-router-dom';
 import notyContainer from '../../hoc/Noty';
 
+
 const useStyles = theme => ({
   root: {
     padding: theme.spacing(4),
@@ -50,6 +51,7 @@ class MainForm extends Component {
       formTitle: '',
       formContent: '',
       responsibleEmployee: '',
+      isEditable: this.props.isEditable
     };
     this.inputLabel = React.createRef();
   }
@@ -69,6 +71,15 @@ class MainForm extends Component {
     this.setState({
       labelWidth: this.inputLabel.current.offsetWidth,
     });
+  }
+
+  shouldComponentUpdate(nextProps) {
+    if (this.props.isEditable !== nextProps.isEditable) {
+      this.setState({
+        isEditable: this.props.isEditable,
+      });
+    }
+    return true;
   }
 
   handleContentChange = event => {
@@ -124,7 +135,9 @@ class MainForm extends Component {
   }
 
   render() {
+    const isEditable = this.state.isEditable;
     const users = this.state.users;
+
     return (
       <div className="InfoList">
         <Grid container spacing={3}>
@@ -137,7 +150,7 @@ class MainForm extends Component {
             <Paper className={this.props.classes.root}>
               <Typography variant="caption" display="block" gutterBottom>
                 Here you add a new issue for current retrospective meeting.<br />
-                Later you may find it at <Link to="/archive">Archive</Link> section for a corresponding date.
+                Later you may find it at <Link to="/archive">archive</Link> section for a corresponding date.
               </Typography>
               <form onSubmit={this.submitHandler} noValidate autoComplete="off">
                 <div className={this.props.classes.inputRow}>
@@ -160,6 +173,12 @@ class MainForm extends Component {
                     fullWidth
                   />
                 </div>
+                {/*TODO: Add logic for editable form*/}
+
+                {isEditable ? <div className={this.props.classes.inputRow}>
+                  xx
+                </div> : ''}
+
                 <div className={this.props.classes.inputRowFlex}>
                   <div className={this.props.classes.inputRowFlexLeft}>
                     <FormControl variant="outlined" fullWidth>

@@ -18,7 +18,10 @@ export default class MainRouter extends React.Component {
         <div>
           <Switch>
             <Route path="/add-new">
-              <MainFormPage />
+              <MainFormPage isEditable={false} />
+            </Route>
+            <Route path="/edit">
+              <MainFormPage isEditable={true} />
             </Route>
             <Route path="/notepad">
               <Notepad />
