@@ -42,18 +42,17 @@ const useStyles = theme => ({
 });
 
 class MainForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      users: [],
-      labelWidth: 0,
-      formTitle: '',
-      formContent: '',
-      responsibleEmployee: '',
-      isEditable: this.props.isEditable,
-    };
-    this.inputLabel = React.createRef();
-  }
+
+  state = {
+    users: [],
+    labelWidth: 0,
+    formTitle: '',
+    formContent: '',
+    responsibleEmployee: ''
+  };
+
+  inputLabel = React.createRef();
+
 
   componentDidMount() {
     Api.getUsers().then(users => {
@@ -62,22 +61,15 @@ class MainForm extends Component {
         items.push(e.fields);
         return null;
       });
+
       this.setState({
         users: items,
       });
     });
 
     this.setState({
-      labelWidth: this.inputLabel.current.offsetWidth,
+      labelWidth: this.inputLabel.current.offsetWidth
     });
-  }
-
-  shouldComponentUpdate(nextProps) {
-    return nextProps.isEditable !== this.state.isEditable;
-  }
-
-  componentDidUpdate(props) {
-    this.setState({ isEditable: props.isEditable });
   }
 
   handleContentChange = event => {
@@ -99,6 +91,7 @@ class MainForm extends Component {
     const shortDate = date.toJSON().slice(0, 10);
     let target = e.currentTarget;
     console.log('date', shortDate);
+
     Api.setData({
       edit: false,
       id: uuid,
@@ -133,8 +126,9 @@ class MainForm extends Component {
   }
 
   render() {
-    const isEditable = this.state.isEditable;
+    const isEditable = this.props.isEditable;
     const users = this.state.users;
+    console.log("STATE", this.state);
 
     return (
       <div className="InfoList">
@@ -173,7 +167,7 @@ class MainForm extends Component {
                     fullWidth
                   />
                 </div>
-                {/*TODO: Add logic for editable form*/}
+
 
                 {isEditable ? <div className={this.props.classes.inputRow}>xx</div> : ''}
 
