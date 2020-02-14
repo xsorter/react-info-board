@@ -55,6 +55,7 @@ class MainForm extends Component {
 
 
   componentDidMount() {
+    console.log(this.props);
     Api.getUsers().then(users => {
       const items = [];
       users.documents.map(e => {

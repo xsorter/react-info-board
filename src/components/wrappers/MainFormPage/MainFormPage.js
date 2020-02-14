@@ -15,7 +15,8 @@ const useStyles = makeStyles(theme => ({
 
 const HomePage = props => {
   const classes = useStyles();
-  console.log(props);
+  console.log(props.params);
+
   return (
     <div className="HomePage">
       <div className="cBox">
