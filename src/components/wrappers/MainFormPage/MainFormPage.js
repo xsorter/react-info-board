@@ -15,6 +15,7 @@ const useStyles = makeStyles(theme => ({
 
 const HomePage = props => {
   const classes = useStyles();
+  console.log(props.params);
 
   return (
     <div className="HomePage">
@@ -25,7 +26,7 @@ const HomePage = props => {
               <ResponsiblePerson />
             </Grid>
             <Grid item xs={9}>
-              <MainForm />
+              <MainForm {...props} />
             </Grid>
           </Grid>
         </div>

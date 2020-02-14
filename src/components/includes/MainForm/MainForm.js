@@ -12,6 +12,7 @@ import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import Api from '../../../Api';
 import helpers from '../../../Helpers';
+import { Link } from 'react-router-dom';
 import notyContainer from '../../hoc/Noty';
 
 const useStyles = theme => ({
@@ -41,19 +42,20 @@ const useStyles = theme => ({
 });
 
 class MainForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      users: [],
-      labelWidth: 0,
-      formTitle: '',
-      formContent: '',
-      responsibleEmployee: '',
-    };
-    this.inputLabel = React.createRef();
-  }
+
+  state = {
+    users: [],
+    labelWidth: 0,
+    formTitle: '',
+    formContent: '',
+    responsibleEmployee: ''
+  };
+
+  inputLabel = React.createRef();
+
 
   componentDidMount() {
+    console.log(this.props);
     Api.getUsers().then(users => {
       const items = [];
       users.documents.map(e => {
@@ -67,7 +69,7 @@ class MainForm extends Component {
     });
 
     this.setState({
-      labelWidth: this.inputLabel.current.offsetWidth,
+      labelWidth: this.inputLabel.current.offsetWidth
     });
   }
 
@@ -90,6 +92,7 @@ class MainForm extends Component {
     const shortDate = date.toJSON().slice(0, 10);
     let target = e.currentTarget;
     console.log('date', shortDate);
+
     Api.setData({
       edit: false,
       id: uuid,
@@ -124,7 +127,10 @@ class MainForm extends Component {
   }
 
   render() {
+    const isEditable = this.props.isEditable;
     const users = this.state.users;
+    console.log("STATE", this.state);
+
     return (
       <div className="InfoList">
         <Grid container spacing={3}>
@@ -136,10 +142,10 @@ class MainForm extends Component {
           <Grid item xs={12}>
             <Paper className={this.props.classes.root}>
               <Typography variant="caption" display="block" gutterBottom>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum quasi quidem
-                quibusdam.
+                Here you add a new issue for current retrospective meeting.
                 <br />
-                Quos blanditiis cupiditate numquam fugiat deleniti?
+                Later you may find it at <Link to="/archive">archive</Link> section for a
+                corresponding date.
               </Typography>
               <form onSubmit={this.submitHandler} noValidate autoComplete="off">
                 <div className={this.props.classes.inputRow}>
@@ -162,6 +168,10 @@ class MainForm extends Component {
                     fullWidth
                   />
                 </div>
+
+
+                {isEditable ? <div className={this.props.classes.inputRow}>xx</div> : ''}
+
                 <div className={this.props.classes.inputRowFlex}>
                   <div className={this.props.classes.inputRowFlexLeft}>
                     <FormControl variant="outlined" fullWidth>

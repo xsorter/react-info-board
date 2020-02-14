@@ -10,28 +10,18 @@ import { EventNote } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 
 export default class MainRouter extends React.Component {
-
   render() {
     return (
       <Router>
         <Header />
         <div>
           <Switch>
-            <Route path="/add-new">
-              <MainFormPage />
-            </Route>
-            <Route path="/notepad">
-              <Notepad />
-            </Route>
-            <Route path="/archive">
-              <ArchivePage />
-            </Route>
-            <Route path="/settings">
-              <Settings />
-            </Route>
-            <Route path="/">
-              <HomePage />
-            </Route>
+            <Route path="/add-new" render={() => <MainFormPage isEditable={false}/>} />
+            <Route path="/edit/:itemId" render={(props) => <MainFormPage isEditable={true} {...props}/>} />
+            <Route path="/notepad" render={() => <Notepad />} />
+            <Route path="/archive" render={() => <ArchivePage />} />
+            <Route path="/settings" render={() => <Settings />} />
+            <Route path="/" render={() => <HomePage />} />
           </Switch>
         </div>
         <Link title="Notepad" className="button__notepad" to="/notepad">

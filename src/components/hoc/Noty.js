@@ -4,11 +4,10 @@ import { CSSTransition } from 'react-transition-group';
 
 const TIMEOUT = 3000;
 
-const notyContainer = (WrappedComponent) => {
+const notyContainer = WrappedComponent => {
   return class extends React.Component {
     constructor(props) {
       super(props);
-
       this.state = {
         type: 'info',
         show: false,
@@ -20,13 +19,13 @@ const notyContainer = (WrappedComponent) => {
       const newMessage = { ...message };
       this.setState(newMessage);
       setTimeout(() => {
-        this.setState({show: false})
-      }, TIMEOUT)
+        this.setState({ show: false });
+      }, TIMEOUT);
     };
 
-    closeHandler = () =>{
-      this.setState({show: false});
-    }
+    closeHandler = () => {
+      this.setState({ show: false });
+    };
 
     render() {
       const noty = this.state;
@@ -40,9 +39,10 @@ const notyContainer = (WrappedComponent) => {
                 <span>&#x2716;</span>
               </div>
             </div>
-          </CSSTransition >
+          </CSSTransition>
 
-          <WrappedComponent {...this.props}
+          <WrappedComponent
+            {...this.props}
             onMessageFired={message => this.messageHandler(message)}
           ></WrappedComponent>
         </React.Fragment>
