@@ -42,17 +42,16 @@ const useStyles = theme => ({
 });
 
 class MainForm extends Component {
-
   state = {
     users: [],
     labelWidth: 0,
     formTitle: '',
     formContent: '',
-    responsibleEmployee: ''
+    responsibleEmployee: '',
+    currentId: this.props.isEditable ? this.props.match.params.itemId : '',
   };
 
   inputLabel = React.createRef();
-
 
   componentDidMount() {
     console.log(this.props);
@@ -69,7 +68,7 @@ class MainForm extends Component {
     });
 
     this.setState({
-      labelWidth: this.inputLabel.current.offsetWidth
+      labelWidth: this.inputLabel.current.offsetWidth,
     });
   }
 
@@ -129,14 +128,20 @@ class MainForm extends Component {
   render() {
     const isEditable = this.props.isEditable;
     const users = this.state.users;
-    console.log("STATE", this.state);
+    console.log('STATE', this.state);
 
     return (
       <div className="InfoList">
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Typography color="primary" variant="h5" component="h5">
-              Add New Issue
+              {isEditable ? (
+                <span title={this.state.currentId}>
+                  Edit Item: {this.state.currentId.substring(1, 7)}...
+                </span>
+              ) : (
+                'Add New Issue'
+              )}
             </Typography>
           </Grid>
           <Grid item xs={12}>
@@ -168,7 +173,6 @@ class MainForm extends Component {
                     fullWidth
                   />
                 </div>
-
 
                 {isEditable ? <div className={this.props.classes.inputRow}>xx</div> : ''}
 
