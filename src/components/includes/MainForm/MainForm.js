@@ -87,28 +87,26 @@ class MainForm extends Component {
   submitHandler = e => {
     e.preventDefault();
     const uuid = helpers.idGenerator();
-    const date = new Date();
-    const shortDate = date.toJSON().slice(0, 10);
-    let target = e.currentTarget;
-    console.log('date', shortDate);
+    const target = e.currentTarget;
+    const request = {
+      fields: {
+        title: { stringValue: this.state.formTitle },
+        content: { stringValue: this.state.formContent },
+        status: { stringValue: 'opened' },
+        deletionSubmit: { booleanValue: false },
+        author: { stringValue: this.state.responsibleEmployee },
+        id: { stringValue: uuid },
+        timestampClient: { stringValue: helpers.getFullDate() },
+        date: { stringValue: helpers.getShortDate() },
+      }
+    }
 
     Api.setData({
       edit: false,
       id: uuid,
-      requestBody: {
-        fields: {
-          title: { stringValue: this.state.formTitle },
-          content: { stringValue: this.state.formContent },
-          status: { stringValue: 'opened' },
-          deletionSubmit: { booleanValue: false },
-          author: { stringValue: this.state.responsibleEmployee },
-          id: { stringValue: uuid },
-          timestampClient: { stringValue: date },
-          date: { stringValue: shortDate },
-        },
-      },
-    }).then(resp => {
-      console.log(resp);
+      requestBody: request,
+    })
+    .then(resp => {
       if (resp.name) {
         target.reset();
         const notyMessage = {
@@ -147,7 +145,7 @@ class MainForm extends Component {
           <Grid item xs={12}>
             <Paper className={this.props.classes.root}>
               <Typography variant="caption" display="block" gutterBottom>
-                Here you add a new issue for current retrospective meeting.
+                Here you can add a new issue for current retrospective meeting.
                 <br />
                 Later you may find it at <Link to="/archive">archive</Link> section for a
                 corresponding date.
@@ -174,7 +172,7 @@ class MainForm extends Component {
                   />
                 </div>
 
-                {isEditable ? <div className={this.props.classes.inputRow}>xx</div> : ''}
+                {isEditable ? <div className={this.props.classes.inputRow}>EDITABLE TEST</div> : ''}
 
                 <div className={this.props.classes.inputRowFlex}>
                   <div className={this.props.classes.inputRowFlexLeft}>
