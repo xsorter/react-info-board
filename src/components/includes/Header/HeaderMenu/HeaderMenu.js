@@ -54,7 +54,11 @@ const HeaderMenu = props => {
           </ListItemIcon>
           <ListItemText primary="Add new issue" />
         </MenuItem>
-        <MenuItem onClick={handleClose} to="/edit/2971d37e-51bd-4b40-bd73-ee5857b720a8" component={NavLink}>
+        <MenuItem
+          onClick={handleClose}
+          to="/edit/2971d37e-51bd-4b40-bd73-ee5857b720a8"
+          component={NavLink}
+        >
           <ListItemIcon>
             <PostAdd fontSize="small" />
           </ListItemIcon>

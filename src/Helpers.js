@@ -6,6 +6,16 @@ const helpers = {
       return v.toString(16);
     });
   },
-};
+
+  getShortDate: () => {
+    const date = new Date();
+    return date.toJSON().slice(0, 10);
+  },
+
+  getFullDate: () => {
+    return new Date();
+  }
+}
+
 
 export default helpers;
