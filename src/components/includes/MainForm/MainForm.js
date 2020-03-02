@@ -70,7 +70,24 @@ class MainForm extends Component {
     this.setState({
       labelWidth: this.inputLabel.current.offsetWidth,
     });
+
+    if(this.props.isEditable){
+      this.populateEditedData();
+    }
   }
+
+  populateEditedData(){
+    Api.getSingleItem(this.state.currentId)
+      .then((data) => {
+        console.log('DATA FOR EDIT', data.fields);
+        console.log('DATA TITLE EDIT', data.fields.title.stringValue);
+        this.setState({
+          formTitle: data.fields.title.stringValue,
+          formContent: data.fields.content.stringValue,
+          responsibleEmployee: data.fields.content.stringValue
+        })
+      })
+  };
 
   handleContentChange = event => {
     this.setState({ formContent: event.target.value });
@@ -157,6 +174,7 @@ class MainForm extends Component {
                     label="Issue Subject"
                     variant="outlined"
                     onChange={this.handleTitleChange}
+                    value={this.state.formTitle}
                     fullWidth
                   />
                 </div>
@@ -167,6 +185,7 @@ class MainForm extends Component {
                     multiline
                     rows="4"
                     variant="outlined"
+                    value={this.state.formContent}
                     onChange={this.handleContentChange}
                     fullWidth
                   />
@@ -187,6 +206,9 @@ class MainForm extends Component {
                         onChange={this.handleSelectChange}
                         value={this.state.responsibleEmployee}
                       >
+                        {/*TODO: Add condition*/}
+                        <MenuItem value={this.state.responsibleEmployee}>-TEST-</MenuItem>
+
                         {users.map((e, i) => {
                           return (
                             <MenuItem key={i} value={e.shortName.stringValue}>
