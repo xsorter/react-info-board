@@ -7,8 +7,9 @@ import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import Switch from '@material-ui/core/Switch';
+import { Switch } from '@material-ui/core';
 import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import Api from '../../../Api';
@@ -50,7 +51,7 @@ class MainForm extends Component {
     formContent: '',
     responsibleEmployee: '',
     currentId: this.props.isEditable ? this.props.match.params.itemId : '',
-    statusSwitch: false
+    statusClosed: false,
   };
 
   inputLabel = React.createRef();
@@ -65,6 +66,7 @@ class MainForm extends Component {
       });
 
       this.setState({
+        ...this.state,
         users: items,
       });
     });
@@ -73,22 +75,26 @@ class MainForm extends Component {
       labelWidth: this.inputLabel.current.offsetWidth,
     });
 
-    if(this.props.isEditable){
+    if (this.props.isEditable) {
       this.populateEditedData();
     }
   }
 
-  populateEditedData(){
-    Api.getSingleItem(this.state.currentId)
-      .then((data) => {
-        console.log('DATA FOR EDIT', data);
-        console.log('DATA TITLE EDIT', data.fields.title.stringValue);
-        this.setState({
-          formTitle: data.fields.title.stringValue,
-          formContent: data.fields.content.stringValue,
-          responsibleEmployee: data.fields.author.stringValue
-        })
-      })
+  populateEditedData() {
+    Api.getSingleItem(this.state.currentId).then(data => {
+      console.log('DATA FOR EDIT', data);
+      console.log('DATA TITLE EDIT', data.fields.title.stringValue);
+      this.setState({
+        formTitle: data.fields.title.stringValue,
+        formContent: data.fields.content.stringValue,
+        responsibleEmployee: data.fields.author.stringValue,
+      });
+    });
+  }
+
+  handleStatusChange = event => {
+    console.log('xxx');
+    this.setState({ statusClosed: event.target.checked });
   };
 
   handleContentChange = event => {
@@ -102,10 +108,6 @@ class MainForm extends Component {
   handleSelectChange = event => {
     this.setState({ responsibleEmployee: event.target.value });
   };
-
-  handleSwitch = name => event => {
-    this.setState({ statusSwitch: event.target.checked })
-  }
 
   submitHandler = e => {
     e.preventDefault();
@@ -121,20 +123,19 @@ class MainForm extends Component {
         id: { stringValue: this.props.isEditable ? this.state.currentId : uuid },
         timestampClient: { stringValue: helpers.getFullDate() },
         date: { stringValue: helpers.getShortDate() },
-      }
-    }
+      },
+    };
 
     Api.setData({
       edit: this.props.isEditable,
       id: uuid,
       requestBody: request,
-    })
-    .then(resp => {
+    }).then(resp => {
       if (resp.name) {
         this.setState({
           formTitle: '',
           formContent: '',
-          responsibleEmployee: ''
+          responsibleEmployee: '',
         });
         target.reset();
         const notyMessage = {
@@ -202,15 +203,23 @@ class MainForm extends Component {
                   />
                 </div>
 
-                {isEditable ?
-                <div className={this.props.classes.inputRow}>
-                  <Switch
-                    checked={this.state.statusSwitch}
-                    /*onChange={this.hadleSwitch}*/
-                    value="checkedA"
-                    inputProps={{ 'aria-label': 'secondary checkbox' }}
-                  />
-                </div> : ''}
+                {isEditable ? (
+                  <div className={this.props.classes.inputRow}>
+                    <FormControlLabel
+                      control={
+                        <Switch
+                          checked={this.state.statusClosed}
+                          onChange={this.handleStatusChange}
+                          value={this.state.statusClosed}
+                          inputProps={{ 'aria-label': 'secondary checkbox' }}
+                        />
+                      }
+                      label={this.state.statusClosed ? 'Status: closed' : 'Status: opened'}
+                    />
+                  </div>
+                ) : (
+                  ''
+                )}
 
                 <div className={this.props.classes.inputRowFlex}>
                   <div className={this.props.classes.inputRowFlexLeft}>
