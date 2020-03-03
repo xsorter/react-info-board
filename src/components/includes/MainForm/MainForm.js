@@ -1,3 +1,4 @@
+//TODO: recfactor component
 import React, { Component } from 'react';
 import './MainForm.sass';
 import Grid from '@material-ui/core/Grid';
@@ -16,6 +17,7 @@ import Api from '../../../Api';
 import helpers from '../../../Helpers';
 import { Link } from 'react-router-dom';
 import notyContainer from '../../hoc/Noty';
+import { withRouter } from 'react-router-dom';
 
 const useStyles = theme => ({
   root: {
@@ -50,6 +52,8 @@ class MainForm extends Component {
     formTitle: '',
     formContent: '',
     responsibleEmployee: '',
+    /*isEditable: this.props.location.pathname !== '/add-new' ? true : false,*/
+    isEditable: this.props.isEditable ? true : false,
     currentId: this.props.isEditable ? this.props.match.params.itemId : '',
     statusClosed: false,
   };
@@ -57,7 +61,8 @@ class MainForm extends Component {
   inputLabel = React.createRef();
 
   componentDidMount() {
-    console.log(this.props);
+    console.log('prop', this.props);
+
     Api.getUsers().then(users => {
       const items = [];
       users.documents.map(e => {
@@ -66,7 +71,6 @@ class MainForm extends Component {
       });
 
       this.setState({
-        ...this.state,
         users: items,
       });
     });
@@ -75,25 +79,37 @@ class MainForm extends Component {
       labelWidth: this.inputLabel.current.offsetWidth,
     });
 
-    if (this.props.isEditable) {
+    this.populateEditedData();
+  }
+
+  /*componentWillReceiveProps(nextProps) {
+    if (nextProps.location.pathname !== '/add-new') {
+      console.log(nextProps.location.pathname);
+      this.setState({
+        isEditable: false,
+      });
+    } else {
+      this.setState({
+        isEditable: true,
+      });
       this.populateEditedData();
+    }
+    console.log('EDITABLEST', this.state.isEditable);
+  }*/
+
+  populateEditedData() {
+    if (this.state.isEditable) {
+      Api.getSingleItem(this.state.currentId).then(data => {
+        this.setState({
+          formTitle: data.fields.title.stringValue,
+          formContent: data.fields.content.stringValue,
+          responsibleEmployee: data.fields.author.stringValue,
+        });
+      });
     }
   }
 
-  populateEditedData() {
-    Api.getSingleItem(this.state.currentId).then(data => {
-      console.log('DATA FOR EDIT', data);
-      console.log('DATA TITLE EDIT', data.fields.title.stringValue);
-      this.setState({
-        formTitle: data.fields.title.stringValue,
-        formContent: data.fields.content.stringValue,
-        responsibleEmployee: data.fields.author.stringValue,
-      });
-    });
-  }
-
   handleStatusChange = event => {
-    console.log('xxx');
     this.setState({ statusClosed: event.target.checked });
   };
 
@@ -120,14 +136,14 @@ class MainForm extends Component {
         status: { stringValue: 'opened' },
         deletionSubmit: { booleanValue: false },
         author: { stringValue: this.state.responsibleEmployee },
-        id: { stringValue: this.props.isEditable ? this.state.currentId : uuid },
+        id: { stringValue: this.state.isEditable ? this.state.currentId : uuid },
         timestampClient: { stringValue: helpers.getFullDate() },
         date: { stringValue: helpers.getShortDate() },
       },
     };
 
     Api.setData({
-      edit: this.props.isEditable,
+      edit: this.state.isEditable,
       id: uuid,
       requestBody: request,
     }).then(resp => {
@@ -150,12 +166,13 @@ class MainForm extends Component {
 
   componentWillUnmount() {
     //TODO: clear subscribtion
+    console.log('unmount');
   }
 
   render() {
-    const isEditable = this.props.isEditable;
+    console.log('prop', this.props);
+    const isEditable = this.state.isEditable;
     const users = this.state.users;
-    console.log('STATE', this.state);
 
     return (
       <div className="InfoList">
@@ -259,4 +276,4 @@ class MainForm extends Component {
   }
 }
 
-export default notyContainer(withStyles(useStyles)(MainForm));
+export default withRouter(notyContainer(withStyles(useStyles)(MainForm)));

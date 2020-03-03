@@ -16,7 +16,10 @@ export default class MainRouter extends React.Component {
         <Header />
         <div>
           <Switch>
-            <Route path="/add-new" render={() => <MainFormPage isEditable={false} />} />
+            <Route
+              path="/add-new"
+              render={props => <MainFormPage isEditable={false} {...props} />}
+            />
             <Route
               path="/edit/:itemId"
               render={props => <MainFormPage isEditable={true} {...props} />}
