@@ -7,6 +7,7 @@ import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
+import Switch from '@material-ui/core/Switch';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
@@ -49,6 +50,7 @@ class MainForm extends Component {
     formContent: '',
     responsibleEmployee: '',
     currentId: this.props.isEditable ? this.props.match.params.itemId : '',
+    statusSwitch: false
   };
 
   inputLabel = React.createRef();
@@ -79,12 +81,12 @@ class MainForm extends Component {
   populateEditedData(){
     Api.getSingleItem(this.state.currentId)
       .then((data) => {
-        console.log('DATA FOR EDIT', data.fields);
+        console.log('DATA FOR EDIT', data);
         console.log('DATA TITLE EDIT', data.fields.title.stringValue);
         this.setState({
           formTitle: data.fields.title.stringValue,
           formContent: data.fields.content.stringValue,
-          responsibleEmployee: data.fields.content.stringValue
+          responsibleEmployee: data.fields.author.stringValue
         })
       })
   };
@@ -101,6 +103,10 @@ class MainForm extends Component {
     this.setState({ responsibleEmployee: event.target.value });
   };
 
+  handleSwitch = name => event => {
+    this.setState({ statusSwitch: event.target.checked })
+  }
+
   submitHandler = e => {
     e.preventDefault();
     const uuid = helpers.idGenerator();
@@ -112,19 +118,24 @@ class MainForm extends Component {
         status: { stringValue: 'opened' },
         deletionSubmit: { booleanValue: false },
         author: { stringValue: this.state.responsibleEmployee },
-        id: { stringValue: uuid },
+        id: { stringValue: this.props.isEditable ? this.state.currentId : uuid },
         timestampClient: { stringValue: helpers.getFullDate() },
         date: { stringValue: helpers.getShortDate() },
       }
     }
 
     Api.setData({
-      edit: false,
+      edit: this.props.isEditable,
       id: uuid,
       requestBody: request,
     })
     .then(resp => {
       if (resp.name) {
+        this.setState({
+          formTitle: '',
+          formContent: '',
+          responsibleEmployee: ''
+        });
         target.reset();
         const notyMessage = {
           type: 'success',
@@ -191,7 +202,15 @@ class MainForm extends Component {
                   />
                 </div>
 
-                {isEditable ? <div className={this.props.classes.inputRow}>EDITABLE TEST</div> : ''}
+                {isEditable ?
+                <div className={this.props.classes.inputRow}>
+                  <Switch
+                    checked={this.state.statusSwitch}
+                    /*onChange={this.hadleSwitch}*/
+                    value="checkedA"
+                    inputProps={{ 'aria-label': 'secondary checkbox' }}
+                  />
+                </div> : ''}
 
                 <div className={this.props.classes.inputRowFlex}>
                   <div className={this.props.classes.inputRowFlexLeft}>
@@ -206,9 +225,6 @@ class MainForm extends Component {
                         onChange={this.handleSelectChange}
                         value={this.state.responsibleEmployee}
                       >
-                        {/*TODO: Add condition*/}
-                        <MenuItem value={this.state.responsibleEmployee}>-TEST-</MenuItem>
-
                         {users.map((e, i) => {
                           return (
                             <MenuItem key={i} value={e.shortName.stringValue}>
