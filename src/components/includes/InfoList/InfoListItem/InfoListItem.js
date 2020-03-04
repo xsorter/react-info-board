@@ -43,7 +43,7 @@ const InfoListItem = props => {
           ''
         )}
 
-        <h6 className="item__title">{props.title}</h6>
+        <h6 title={`id: ${props.id}`} className="item__title">{props.title}</h6>
         <span className="item__date">{props.date}&nbsp;</span>
         <div className="item__content">{props.content}</div>
 

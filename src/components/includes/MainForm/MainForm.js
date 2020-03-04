@@ -1,9 +1,10 @@
 //TODO: recfactor component
 import React, { Component } from 'react';
 import './MainForm.sass';
+import { withStyles } from '@material-ui/core/styles';
+
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -13,11 +14,13 @@ import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
+
 import Api from '../../../Api';
 import helpers from '../../../Helpers';
-import { Link } from 'react-router-dom';
 import notyContainer from '../../hoc/Noty';
+
 import { withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const useStyles = theme => ({
   root: {
@@ -52,7 +55,6 @@ class MainForm extends Component {
     formTitle: '',
     formContent: '',
     responsibleEmployee: '',
-    /*isEditable: this.props.location.pathname !== '/add-new' ? true : false,*/
     isEditable: this.props.isEditable ? true : false,
     currentId: this.props.isEditable ? this.props.match.params.itemId : '',
     statusClosed: false,
@@ -61,15 +63,12 @@ class MainForm extends Component {
   inputLabel = React.createRef();
 
   componentDidMount() {
-    console.log('prop', this.props);
-
     Api.getUsers().then(users => {
       const items = [];
       users.documents.map(e => {
         items.push(e.fields);
         return null;
       });
-
       this.setState({
         users: items,
       });
@@ -79,34 +78,36 @@ class MainForm extends Component {
       labelWidth: this.inputLabel.current.offsetWidth,
     });
 
-    this.populateEditedData();
-  }
-
-  /*componentWillReceiveProps(nextProps) {
-    if (nextProps.location.pathname !== '/add-new') {
-      console.log(nextProps.location.pathname);
-      this.setState({
-        isEditable: false,
-      });
-    } else {
-      this.setState({
-        isEditable: true,
-      });
+    if(this.state.isEditable){
       this.populateEditedData();
     }
-    console.log('EDITABLEST', this.state.isEditable);
-  }*/
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.location.pathname !== this.props.location.pathname) {
+      this.setState({
+        isEditable: nextProps.isEditable
+      });
+      if(nextProps.location.pathname === '/add-new'){
+        this.setState({
+          formTitle: '',
+          formContent: '',
+          responsibleEmployee: '',
+        });
+      } else {
+        this.populateEditedData()
+      }
+    }
+  }
 
   populateEditedData() {
-    if (this.state.isEditable) {
-      Api.getSingleItem(this.state.currentId).then(data => {
-        this.setState({
-          formTitle: data.fields.title.stringValue,
-          formContent: data.fields.content.stringValue,
-          responsibleEmployee: data.fields.author.stringValue,
-        });
+    Api.getSingleItem(this.state.currentId).then(data => {
+      this.setState({
+        formTitle: data.fields.title.stringValue,
+        formContent: data.fields.content.stringValue,
+        responsibleEmployee: data.fields.author.stringValue,
       });
-    }
+    });
   }
 
   handleStatusChange = event => {
@@ -146,7 +147,8 @@ class MainForm extends Component {
       edit: this.state.isEditable,
       id: uuid,
       requestBody: request,
-    }).then(resp => {
+    })
+    .then(resp => {
       if (resp.name) {
         this.setState({
           formTitle: '',
@@ -166,11 +168,9 @@ class MainForm extends Component {
 
   componentWillUnmount() {
     //TODO: clear subscribtion
-    console.log('unmount');
   }
 
   render() {
-    console.log('prop', this.props);
     const isEditable = this.state.isEditable;
     const users = this.state.users;
 

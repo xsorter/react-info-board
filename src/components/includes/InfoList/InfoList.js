@@ -81,6 +81,7 @@ class InfoList extends Component {
                   submit={() => this.submitHandler(index)}
                   showPopup={this.state.itemList[index].deletionSubmit.booleanValue}
                   title={listItem.title.stringValue}
+                  id={listItem.id.stringValue}
                   author={listItem.author.stringValue}
                   content={listItem.content.stringValue}
                   status={listItem.status.stringValue}
