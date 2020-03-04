@@ -79,7 +79,7 @@ class MainForm extends Component {
     });
 
     if(this.state.isEditable){
-      this.populateEditedData();
+      this.populateEditedData(this.state.currentId);
     }
   }
 
@@ -95,18 +95,26 @@ class MainForm extends Component {
           responsibleEmployee: '',
         });
       } else {
-        this.populateEditedData()
+        this.setState({
+          currentId: nextProps.match.params.itemId
+        })
+        this.populateEditedData(nextProps.match.params.itemId)
       }
+      console.log('PROP', nextProps)
     }
   }
 
-  populateEditedData() {
-    Api.getSingleItem(this.state.currentId).then(data => {
+  populateEditedData(id) {
+    Api.getSingleItem(id)
+    .then(data => {
       this.setState({
         formTitle: data.fields.title.stringValue,
         formContent: data.fields.content.stringValue,
         responsibleEmployee: data.fields.author.stringValue,
       });
+    })
+    .catch(err => {
+      console.log('ERR', err)
     });
   }
 
