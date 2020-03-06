@@ -128,6 +128,7 @@ class MainForm extends Component {
 
   handleTitleChange = event => {
     this.setState({ formTitle: event.target.value });
+    console.log('ID', this.state);
   };
 
   handleSelectChange = event => {
@@ -153,7 +154,7 @@ class MainForm extends Component {
 
     Api.setData({
       edit: this.state.isEditable,
-      id: uuid,
+      id: this.state.isEditable ? this.state.currentId : uuid,
       requestBody: request,
     })
     .then(resp => {

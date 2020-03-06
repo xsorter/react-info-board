@@ -4,8 +4,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import CloseIcon from '@material-ui/icons/Close';
+import EditIcon from '@material-ui/icons/Edit';
 import SubmitPopup from '../SubmitPopup/SubmitPopup';
 import notyContainer from '../../../hoc/Noty';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -13,6 +15,7 @@ const useStyles = makeStyles(theme => ({
     position: 'relative',
   },
   close: {
+    opacity: 0.5,
     position: 'absolute',
     top: '15px',
     right: '15px',
@@ -25,6 +28,22 @@ const useStyles = makeStyles(theme => ({
       transform: 'rotate(30deg)',
     },
   },
+  edit: {
+    opacity: 0.5,
+    position: 'absolute',
+    top: '15px',
+    right: '40px',
+    fontSize: '1.2678rem',
+    cursor: 'pointer',
+    transition: 'transform ease-out 0.2s',
+    willChange: 'transform',
+    '&:hover': {
+      color: theme.palette.secondary.main,
+    },
+  },
+  link: {
+    color: 'black'
+  },
 }));
 
 const InfoListItem = props => {
@@ -33,6 +52,10 @@ const InfoListItem = props => {
   return (
     <Grid item xs={12}>
       <Paper className={classes.root}>
+        <Link title="edit record" className={classes.link} to={`/edit/${props.id}`}>
+          <EditIcon className={classes.edit}>EditIcon</EditIcon>
+        </Link>
+
         <CloseIcon onClick={props.submit} className={classes.close} />
         {props.showPopup ? (
           <SubmitPopup
@@ -44,7 +67,7 @@ const InfoListItem = props => {
         )}
 
         <h6 title={`id: ${props.id}`} className="item__title">{props.title}</h6>
-        <span className="item__date">{props.date}&nbsp;</span>
+        <span className="item__date">modified: {props.date}&nbsp;</span>
         <div className="item__content">{props.content}</div>
 
         <div className="item__info">
