@@ -69,7 +69,9 @@ class Settings extends React.Component {
         <div className="cBox">
           <h2 className="settings__title">Settings</h2>
           <Paper className="settings__box">
-            <h2 className="settings__subtitle settings__subtitle-responsible">Choose a person who is responsible for current retrospective meeting</h2>
+            <h2 className="settings__subtitle settings__subtitle-responsible">
+              Choose a person who is responsible for current retrospective meeting
+            </h2>
 
             <div className="settings__responsible">
               <div className="settings__responsible-box">

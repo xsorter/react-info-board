@@ -14,8 +14,7 @@ const helpers = {
 
   getFullDate: () => {
     return new Date();
-  }
-}
-
+  },
+};
 
 export default helpers;

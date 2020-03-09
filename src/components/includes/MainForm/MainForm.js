@@ -1,19 +1,26 @@
+//TODO: recfactor component
 import React, { Component } from 'react';
 import './MainForm.sass';
+import { withStyles } from '@material-ui/core/styles';
+
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
+import { Switch } from '@material-ui/core';
 import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
+
 import Api from '../../../Api';
 import helpers from '../../../Helpers';
-import { Link } from 'react-router-dom';
 import notyContainer from '../../hoc/Noty';
+
+import { withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const useStyles = theme => ({
   root: {
@@ -48,20 +55,20 @@ class MainForm extends Component {
     formTitle: '',
     formContent: '',
     responsibleEmployee: '',
+    isEditable: this.props.isEditable ? true : false,
     currentId: this.props.isEditable ? this.props.match.params.itemId : '',
+    statusClosed: false,
   };
 
   inputLabel = React.createRef();
 
   componentDidMount() {
-    console.log(this.props);
     Api.getUsers().then(users => {
       const items = [];
       users.documents.map(e => {
         items.push(e.fields);
         return null;
       });
-
       this.setState({
         users: items,
       });
@@ -70,7 +77,50 @@ class MainForm extends Component {
     this.setState({
       labelWidth: this.inputLabel.current.offsetWidth,
     });
+
+    if(this.state.isEditable){
+      this.populateEditedData(this.state.currentId);
+    }
   }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.location.pathname !== this.props.location.pathname) {
+      this.setState({
+        isEditable: nextProps.isEditable
+      });
+      if(nextProps.location.pathname === '/add-new'){
+        this.setState({
+          formTitle: '',
+          formContent: '',
+          responsibleEmployee: '',
+        });
+      } else {
+        this.setState({
+          currentId: nextProps.match.params.itemId
+        })
+        this.populateEditedData(nextProps.match.params.itemId)
+      }
+      console.log('PROP', nextProps)
+    }
+  }
+
+  populateEditedData(id) {
+    Api.getSingleItem(id)
+    .then(data => {
+      this.setState({
+        formTitle: data.fields.title.stringValue,
+        formContent: data.fields.content.stringValue,
+        responsibleEmployee: data.fields.author.stringValue,
+      });
+    })
+    .catch(err => {
+      console.log('ERR', err)
+    });
+  }
+
+  handleStatusChange = event => {
+    this.setState({ statusClosed: event.target.checked });
+  };
 
   handleContentChange = event => {
     this.setState({ formContent: event.target.value });
@@ -78,6 +128,7 @@ class MainForm extends Component {
 
   handleTitleChange = event => {
     this.setState({ formTitle: event.target.value });
+    console.log('ID', this.state);
   };
 
   handleSelectChange = event => {
@@ -95,19 +146,24 @@ class MainForm extends Component {
         status: { stringValue: 'opened' },
         deletionSubmit: { booleanValue: false },
         author: { stringValue: this.state.responsibleEmployee },
-        id: { stringValue: uuid },
+        id: { stringValue: this.state.isEditable ? this.state.currentId : uuid },
         timestampClient: { stringValue: helpers.getFullDate() },
         date: { stringValue: helpers.getShortDate() },
-      }
-    }
+      },
+    };
 
     Api.setData({
-      edit: false,
-      id: uuid,
+      edit: this.state.isEditable,
+      id: this.state.isEditable ? this.state.currentId : uuid,
       requestBody: request,
     })
     .then(resp => {
       if (resp.name) {
+        this.setState({
+          formTitle: '',
+          formContent: '',
+          responsibleEmployee: '',
+        });
         target.reset();
         const notyMessage = {
           type: 'success',
@@ -124,9 +180,8 @@ class MainForm extends Component {
   }
 
   render() {
-    const isEditable = this.props.isEditable;
+    const isEditable = this.state.isEditable;
     const users = this.state.users;
-    console.log('STATE', this.state);
 
     return (
       <div className="InfoList">
@@ -157,6 +212,7 @@ class MainForm extends Component {
                     label="Issue Subject"
                     variant="outlined"
                     onChange={this.handleTitleChange}
+                    value={this.state.formTitle}
                     fullWidth
                   />
                 </div>
@@ -167,12 +223,29 @@ class MainForm extends Component {
                     multiline
                     rows="4"
                     variant="outlined"
+                    value={this.state.formContent}
                     onChange={this.handleContentChange}
                     fullWidth
                   />
                 </div>
 
-                {isEditable ? <div className={this.props.classes.inputRow}>EDITABLE TEST</div> : ''}
+                {isEditable ? (
+                  <div className={this.props.classes.inputRow}>
+                    <FormControlLabel
+                      control={
+                        <Switch
+                          checked={this.state.statusClosed}
+                          onChange={this.handleStatusChange}
+                          value={this.state.statusClosed}
+                          inputProps={{ 'aria-label': 'secondary checkbox' }}
+                        />
+                      }
+                      label={this.state.statusClosed ? 'Status: closed' : 'Status: opened'}
+                    />
+                  </div>
+                ) : (
+                  ''
+                )}
 
                 <div className={this.props.classes.inputRowFlex}>
                   <div className={this.props.classes.inputRowFlexLeft}>
@@ -212,4 +285,4 @@ class MainForm extends Component {
   }
 }
 
-export default notyContainer(withStyles(useStyles)(MainForm));
+export default withRouter(notyContainer(withStyles(useStyles)(MainForm)));
