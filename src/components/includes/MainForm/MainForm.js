@@ -93,6 +93,7 @@ class MainForm extends Component {
           formTitle: '',
           formContent: '',
           responsibleEmployee: '',
+          statusClosed: false
         });
       } else {
         this.setState({
@@ -111,6 +112,7 @@ class MainForm extends Component {
         formTitle: data.fields.title.stringValue,
         formContent: data.fields.content.stringValue,
         responsibleEmployee: data.fields.author.stringValue,
+        statusClosed: data.fields.status.stringValue === 'opened' ? false : true
       });
     })
     .catch(err => {
@@ -143,7 +145,7 @@ class MainForm extends Component {
       fields: {
         title: { stringValue: this.state.formTitle },
         content: { stringValue: this.state.formContent },
-        status: { stringValue: 'opened' },
+        status: { stringValue: this.state.statusClosed ? 'closed' : 'opened' },
         deletionSubmit: { booleanValue: false },
         author: { stringValue: this.state.responsibleEmployee },
         id: { stringValue: this.state.isEditable ? this.state.currentId : uuid },
@@ -168,7 +170,7 @@ class MainForm extends Component {
         const notyMessage = {
           type: 'success',
           show: true,
-          message: 'Record added!',
+          message: this.state.isEditable ? 'Updated successfully!' : 'Record added!' ,
         };
         this.props.onMessageFired(notyMessage);
       }
@@ -199,12 +201,15 @@ class MainForm extends Component {
           </Grid>
           <Grid item xs={12}>
             <Paper className={this.props.classes.root}>
-              <Typography variant="caption" display="block" gutterBottom>
-                Here you can add a new issue for current retrospective meeting.
-                <br />
-                Later you may find it at <Link to="/archive">archive</Link> section for a
-                corresponding date.
-              </Typography>
+              {!isEditable ?
+                <Typography variant="caption" display="block" gutterBottom>
+                  Here you can add a new issue for current retrospective meeting.
+                  <br />
+                  Later you may find it at <Link to="/archive">archive</Link> section for a
+                  corresponding date.
+                </Typography>
+              : ''}
+
               <form onSubmit={this.submitHandler} noValidate autoComplete="off">
                 <div className={this.props.classes.inputRow}>
                   <TextField
@@ -229,7 +234,7 @@ class MainForm extends Component {
                   />
                 </div>
 
-                {isEditable ? (
+                {isEditable ?
                   <div className={this.props.classes.inputRow}>
                     <FormControlLabel
                       control={
@@ -243,9 +248,7 @@ class MainForm extends Component {
                       label={this.state.statusClosed ? 'Status: closed' : 'Status: opened'}
                     />
                   </div>
-                ) : (
-                  ''
-                )}
+                 : ''}
 
                 <div className={this.props.classes.inputRowFlex}>
                   <div className={this.props.classes.inputRowFlexLeft}>
