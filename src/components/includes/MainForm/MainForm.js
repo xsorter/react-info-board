@@ -56,6 +56,7 @@ class MainForm extends Component {
     formContent: '',
     responsibleEmployee: '',
     isEditable: this.props.isEditable ? true : false,
+    isLoaded: false,
     currentId: this.props.isEditable ? this.props.match.params.itemId : '',
     statusClosed: false,
   };
@@ -235,19 +236,27 @@ class MainForm extends Component {
                 </div>
 
                 {isEditable ?
-                  <div className={this.props.classes.inputRow}>
-                    <FormControlLabel
-                      control={
-                        <Switch
-                          checked={this.state.statusClosed}
-                          onChange={this.handleStatusChange}
-                          value={this.state.statusClosed}
-                          inputProps={{ 'aria-label': 'secondary checkbox' }}
+                  <React.Fragment>
+                    <div className={this.props.classes.inputRowFlex}>
+                      <div className={this.props.classes.inputRowFlexLeft}>
+                        <FormControlLabel
+                          control={
+                            <Switch
+                              checked={this.state.statusClosed}
+                              onChange={this.handleStatusChange}
+                              value={this.state.statusClosed}
+                              inputProps={{ 'aria-label': 'secondary checkbox' }}
+                            />
+                          }
+                          label={this.state.statusClosed ? 'Status: closed' : 'Status: opened'}
                         />
-                      }
-                      label={this.state.statusClosed ? 'Status: closed' : 'Status: opened'}
-                    />
-                  </div>
+                      </div>
+
+                      <div className={this.props.classes.inputRowFlexRight}>
+                        xx
+                      </div>
+                    </div>
+                  </React.Fragment>
                  : ''}
 
                 <div className={this.props.classes.inputRowFlex}>
@@ -280,6 +289,7 @@ class MainForm extends Component {
                   </div>
                 </div>
               </form>
+
             </Paper>
           </Grid>
         </Grid>
