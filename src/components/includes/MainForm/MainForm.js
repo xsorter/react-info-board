@@ -46,6 +46,9 @@ const useStyles = theme => ({
     display: 'flex',
     justifyContent: 'flex-end',
   },
+  inputRowFlexRight_half: {
+    maxWidth: '50%'
+  }
 });
 
 class MainForm extends Component {
@@ -56,8 +59,10 @@ class MainForm extends Component {
     formContent: '',
     responsibleEmployee: '',
     isEditable: this.props.isEditable ? true : false,
+    isLoaded: false,
     currentId: this.props.isEditable ? this.props.match.params.itemId : '',
     statusClosed: false,
+    taskNumber: ''
   };
 
   inputLabel = React.createRef();
@@ -93,6 +98,8 @@ class MainForm extends Component {
           formTitle: '',
           formContent: '',
           responsibleEmployee: '',
+          taskNumber: '',
+          statusClosed: false
         });
       } else {
         this.setState({
@@ -111,7 +118,13 @@ class MainForm extends Component {
         formTitle: data.fields.title.stringValue,
         formContent: data.fields.content.stringValue,
         responsibleEmployee: data.fields.author.stringValue,
+        statusClosed: data.fields.status.stringValue === 'opened' ? false : true,
       });
+      if(data.fields.task){
+        this.setState({
+          taskNumber: data.fields.task.stringValue
+        })
+      }
     })
     .catch(err => {
       console.log('ERR', err)
@@ -124,6 +137,10 @@ class MainForm extends Component {
 
   handleContentChange = event => {
     this.setState({ formContent: event.target.value });
+  };
+
+  handleTaskChange = event => {
+    this.setState({ taskNumber: event.target.value });
   };
 
   handleTitleChange = event => {
@@ -143,12 +160,13 @@ class MainForm extends Component {
       fields: {
         title: { stringValue: this.state.formTitle },
         content: { stringValue: this.state.formContent },
-        status: { stringValue: 'opened' },
+        status: { stringValue: this.state.statusClosed ? 'closed' : 'opened' },
         deletionSubmit: { booleanValue: false },
         author: { stringValue: this.state.responsibleEmployee },
         id: { stringValue: this.state.isEditable ? this.state.currentId : uuid },
         timestampClient: { stringValue: helpers.getFullDate() },
         date: { stringValue: helpers.getShortDate() },
+        task: { stringValue: this.state.isEditable ? this.state.taskNumber : false }
       },
     };
 
@@ -163,12 +181,13 @@ class MainForm extends Component {
           formTitle: '',
           formContent: '',
           responsibleEmployee: '',
+          taskNumber: ''
         });
         target.reset();
         const notyMessage = {
           type: 'success',
           show: true,
-          message: 'Record added!',
+          message: this.state.isEditable ? 'Updated successfully!' : 'Record added!' ,
         };
         this.props.onMessageFired(notyMessage);
       }
@@ -199,12 +218,15 @@ class MainForm extends Component {
           </Grid>
           <Grid item xs={12}>
             <Paper className={this.props.classes.root}>
-              <Typography variant="caption" display="block" gutterBottom>
-                Here you can add a new issue for current retrospective meeting.
-                <br />
-                Later you may find it at <Link to="/archive">archive</Link> section for a
-                corresponding date.
-              </Typography>
+              {!isEditable ?
+                <Typography variant="caption" display="block" gutterBottom>
+                  Here you can add a new issue for current retrospective meeting.
+                  <br />
+                  Later you may find it at <Link to="/archive">archive</Link> section for a
+                  corresponding date.
+                </Typography>
+              : ''}
+
               <form onSubmit={this.submitHandler} noValidate autoComplete="off">
                 <div className={this.props.classes.inputRow}>
                   <TextField
@@ -229,23 +251,36 @@ class MainForm extends Component {
                   />
                 </div>
 
-                {isEditable ? (
-                  <div className={this.props.classes.inputRow}>
-                    <FormControlLabel
-                      control={
-                        <Switch
-                          checked={this.state.statusClosed}
-                          onChange={this.handleStatusChange}
-                          value={this.state.statusClosed}
-                          inputProps={{ 'aria-label': 'secondary checkbox' }}
+                {isEditable ?
+                  <React.Fragment>
+                    <div className={this.props.classes.inputRowFlex}>
+
+                      <div className={this.props.classes.inputRowFlexLeft}>
+                          <TextField
+                            id="outlined-basic"
+                            label="Corresponding task"
+                            variant="outlined"
+                            onChange={this.handleTaskChange}
+                            value={this.state.taskNumber}
+                            fullWidth
+                          />
+                      </div>
+                      <div className={this.props.classes.inputRowFlexRight}>
+                        <FormControlLabel
+                          control={
+                            <Switch
+                              checked={this.state.statusClosed}
+                              onChange={this.handleStatusChange}
+                              value={this.state.statusClosed}
+                              inputProps={{ 'aria-label': 'secondary checkbox' }}
+                            />
+                          }
+                          label={this.state.statusClosed ? 'Status: closed' : 'Status: opened'}
                         />
-                      }
-                      label={this.state.statusClosed ? 'Status: closed' : 'Status: opened'}
-                    />
-                  </div>
-                ) : (
-                  ''
-                )}
+                      </div>
+                    </div>
+                  </React.Fragment>
+                 : ''}
 
                 <div className={this.props.classes.inputRowFlex}>
                   <div className={this.props.classes.inputRowFlexLeft}>
@@ -277,6 +312,7 @@ class MainForm extends Component {
                   </div>
                 </div>
               </form>
+
             </Paper>
           </Grid>
         </Grid>
