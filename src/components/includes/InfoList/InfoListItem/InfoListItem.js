@@ -69,7 +69,9 @@ const InfoListItem = props => {
         <h6 title={`id: ${props.id}`} className="item__title">
           {props.title}
         </h6>
+
         <span className="item__date">modified: {props.date}&nbsp;</span>
+        {props.task ? <p className="item__task">{props.task}</p> : ''}
         <div className="item__content">{props.content}</div>
 
         <div className="item__info">

@@ -86,6 +86,7 @@ class InfoList extends Component {
                   content={listItem.content.stringValue}
                   status={listItem.status.stringValue}
                   date={listItem.date.stringValue}
+                  task={listItem.task ? listItem.task.stringValue : false}
                   key={listItem.id.stringValue}
                 />
               );
