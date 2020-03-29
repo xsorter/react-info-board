@@ -71,7 +71,22 @@ const InfoListItem = props => {
         </h6>
 
         <span className="item__date">modified: {props.date}&nbsp;</span>
-        {props.task ? <p className="item__task">{props.task}</p> : ''}
+
+        {props.task ? (
+          <p className="item__task">
+            corresponding task:&nbsp;
+            <a
+              target="_blank"
+              title="watch at JIRA"
+              href={`https://jira.ourmicroservices.com/browse/${props.task}`}
+            >
+              {props.task}
+            </a>
+          </p>
+        ) : (
+          ''
+        )}
+
         <div className="item__content">{props.content}</div>
 
         <div className="item__info">
