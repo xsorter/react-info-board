@@ -48,12 +48,14 @@ const HeaderMenu = props => {
           </ListItemIcon>
           <ListItemText primary="Homepage" />
         </MenuItem>
+
         <MenuItem onClick={handleClose} to="/add-new" component={NavLink}>
           <ListItemIcon>
             <PostAdd fontSize="small" />
           </ListItemIcon>
           <ListItemText primary="Add new issue" />
         </MenuItem>
+
         <MenuItem
           onClick={handleClose}
           to="/edit/c3ec0a2f-304a-4880-b51f-ba43d27142a0"
@@ -64,12 +66,21 @@ const HeaderMenu = props => {
           </ListItemIcon>
           <ListItemText primary="Edit (DEBUG)" />
         </MenuItem>
+
+        <MenuItem onClick={handleClose} to="/404" component={NavLink}>
+          <ListItemIcon>
+            <Archive fontSize="small" />
+          </ListItemIcon>
+          <ListItemText primary="404 (DEBUG)" />
+        </MenuItem>
+
         <MenuItem onClick={handleClose} to="/archive" component={NavLink}>
           <ListItemIcon>
             <Archive fontSize="small" />
           </ListItemIcon>
           <ListItemText primary="Archive" />
         </MenuItem>
+
         <MenuItem onClick={handleClose} to="/settings" component={NavLink}>
           <ListItemIcon>
             <Settings fontSize="small" />

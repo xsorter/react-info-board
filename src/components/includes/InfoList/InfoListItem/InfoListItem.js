@@ -76,6 +76,7 @@ const InfoListItem = props => {
           <p className="item__task">
             corresponding task:&nbsp;
             <a
+              rel="noopener noreferrer"
               target="_blank"
               title="watch at JIRA"
               href={`https://jira.ourmicroservices.com/browse/${props.task}`}
