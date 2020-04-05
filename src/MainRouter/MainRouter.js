@@ -15,7 +15,7 @@ export default class MainRouter extends React.Component {
     return (
       <Router>
         <Header />
-        <div>
+        <div className="wrapper__outer">
           <Switch>
             <Route exact path="/" render={() => <HomePage />} />
             <Route
