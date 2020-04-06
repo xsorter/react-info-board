@@ -1,10 +1,10 @@
 import React from 'react';
-import './NotFound.scss';
+import './NotFound.sass';
 
 class NotFound extends React.Component {
   render() {
     return (
-      <div className="error">
+      <div className="notfound">
         <h2>404</h2>
         <p>Something went wrong... Page not found</p>
       </div>
