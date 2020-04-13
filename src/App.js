@@ -1,12 +1,11 @@
 import React from 'react';
 import './App.sass';
-import MainRouter from './MainRouter/MainRouter';
-
+import Authorisation from './components/wrappers/Authorisation/Authorisation';
 
 function App() {
   return (
     <div className="App">
-      <MainRouter></MainRouter>
+      <Authorisation></Authorisation>
     </div>
   );
 }
