@@ -2,7 +2,7 @@ import React from 'react';
 import MainRouter from '../../../MainRouter/MainRouter';
 
 const checkAuth = {
-  isLogined: true,
+  isLogined: false,
 };
 
 class Authorisation extends React.Component {
