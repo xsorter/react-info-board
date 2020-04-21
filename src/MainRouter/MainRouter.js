@@ -14,10 +14,17 @@ import { Link } from 'react-router-dom';
 class MainRouter extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      isLogined: false,
+    };
   }
 
-  componentDidMount() {
-    console.log(this.props);
+  loginCheckHandler(val) {
+    this.setState({
+      isLogined: val,
+    });
+    console.log('IS LOGINED', this.state.isLogined);
   }
 
   PrivateRoute = ({ component: Children, ...rest }) => {
@@ -25,7 +32,7 @@ class MainRouter extends React.Component {
       <Route
         {...rest}
         render={props =>
-          false ? (
+          this.state.isLogined ? (
             <Children {...props} />
           ) : (
             <Redirect
@@ -56,9 +63,18 @@ class MainRouter extends React.Component {
               component={props => <MainFormPage isEditable={true} {...props} />}
             />
             <Route path="/notepad" component={() => <Notepad />} />
-            <this.PrivateRoute path="/archive" render={() => <ArchivePage />} />
-            <this.PrivateRoute path="/settings" render={() => <Settings />} />
-            <Route path="/login" component={() => <Login />} />
+            <this.PrivateRoute path="/archive" component={() => <ArchivePage />} />
+            <this.PrivateRoute path="/settings" component={() => <Settings />} />
+            <Route
+              path="/login"
+              component={props => (
+                <Login
+                  currentlyLogined={this.state.isLogined}
+                  isLogined={val => this.loginCheckHandler(val)}
+                  {...props}
+                />
+              )}
+            />
             <Route path="/404" render={() => <NotFound />} />
             <Redirect to="/404" />
           </Switch>
