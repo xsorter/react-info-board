@@ -29,7 +29,7 @@ class Archive extends React.Component {
                 key={i}
                 className={
                   e.status === 'opened'
-                    ? 'Archive__item'
+                    ? 'Archive__item '
                     : 'Archive__item Archive__item_incomplete '
                 }
               >
