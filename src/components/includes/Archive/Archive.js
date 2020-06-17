@@ -28,7 +28,9 @@ class Archive extends React.Component {
               <div
                 key={i}
                 className={
-                  e.status === 'opened' ? 'Archive__item' : 'Archive__item Archive__item_incomplete'
+                  e.status === 'opened'
+                    ? 'Archive__item'
+                    : 'Archive__item Archive__item_incomplete '
                 }
               >
                 <Typography component="div" color="inherit" variant="body2">
